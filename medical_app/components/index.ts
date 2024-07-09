@@ -5,6 +5,11 @@ import Hero from "./Hero";
 import About from "./About";
 import Services from "./Services";
 import Add from "./Add"
+import WhyChoose from "./WhyChoose";
+import Counter from "./Counter";
+import Process from "./Process";
+import Faq from "./Faq";
+import Breadcumb from "./Breadcumb";
 
 export { 
     Header, 
@@ -13,6 +18,11 @@ export {
     Hero,
     About,
     Services,
-    Add
+    Add,
+    WhyChoose,
+    Counter,
+    Process,
+    Faq,
+    Breadcumb
 };
 

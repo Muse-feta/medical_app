@@ -1,4 +1,6 @@
 import React from 'react'
+import Image from 'next/image';
+import nav_bg from "@/asset/img/bg/logo_bg_1.png";
 
 const Header = () => {
   return (
@@ -63,7 +65,7 @@ const Header = () => {
                 <div className="header-logo">
                   <div
                     className="logo-bg"
-                    data-bg-src="assets/img/bg/logo_bg_1.png"
+                    style={{ backgroundImage: `url(${nav_bg.src})` }}
                   ></div>
                   <a href="home-medical-clinic.html">
                     <img src="assets/img/logo.svg" alt="Mediax" />

@@ -1,4 +1,4 @@
-import { About, Add, Hero, Services } from "@/components";
+import { About, Add, Counter, Faq, Hero, Process, Services, WhyChoose } from "@/components";
 import Image from "next/image";
 
 export default function Home() {
@@ -8,6 +8,10 @@ export default function Home() {
       <About/>
       <Services/>
       <Add/>
+      <WhyChoose/>
+      <Counter/>
+      <Process/>
+      {/* <Faq/> */}
     </div>
   );
 }
