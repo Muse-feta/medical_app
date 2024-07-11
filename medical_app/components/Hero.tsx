@@ -1,6 +1,7 @@
 import React from 'react'
 import heroImg from "@/asset/img/hero/hero_bg_2_1.jpg";
-import heroImage from "@/asset/img/hero/hero_2_1.png";
+
+import heroImage from "@/asset/img/hero/hero_custom_2.png";
 import Image from 'next/image';
 import shape1 from "@/asset/img/hero/hero_shape_2_1.svg";
 import shape2 from "@/asset/img/hero/hero_shape_2_2.svg";
@@ -41,7 +42,7 @@ const Hero = () => {
             </div>
           </div>
         </div>
-        <div className="hero-img">
+        <div className="hero-img mr-[100px]">
           <Image src={heroImage} alt="Image" />
         </div>
         <div className="hero-shape1">

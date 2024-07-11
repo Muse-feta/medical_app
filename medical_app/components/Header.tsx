@@ -82,15 +82,12 @@ const Header = () => {
                     <li>
                       <Link href="/about">About Us</Link>
                     </li>
-                    <li className="">
-                      <Link href="service">Service</Link>
-                    </li>
 
                     <li>
-                      <Link href="contact">Contact</Link>
+                      <Link href="appointement">appointement</Link>
                     </li>
                     <li>
-                      <Link href="apointment">Apointment</Link>
+                      <Link href="contact">Contact</Link> 
                     </li>
                     <li>
                       <Link href="login">Login</Link>
@@ -98,9 +95,6 @@ const Header = () => {
                   </ul>
                 </nav>
               </div>
-
-            
-              
             </div>
           </div>
         </div>
