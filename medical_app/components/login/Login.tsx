@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import form_bg from "@/asset/img/bg/contact_form_bg.png";
+import Link from "next/link";
 
 const Login: React.FC = () => {
   return (
@@ -38,17 +39,10 @@ const Login: React.FC = () => {
                   <i className="fal fa-lock"></i>
                 </div>
                 {/* add here signup and forgot password link */}
-                <div className="form-group col-12">
-                  <p className="form-links flex items-center justify-center">
-                    <a href="/signup" className="signup-link mr-6">
-                      Sign Up
-                    </a>
-                    |
-                    <a href="/forgot-password" className="">
-                      Forgot Password
-                    </a>
-                  </p>
-                </div>
+               <div className="lg:ml-[30px] text-[12px] md:text-[15px]">
+                <p>If you don't have an account? <Link href="/signup">Sign Up</Link></p>
+                <p>If you forgot your password?<Link href="/forgot-password">Forgot Password</Link></p>
+               </div>
                 <div className="form-btn col-12">
                   <button className="th-btn btn-fw">Login</button>
                 </div>
