@@ -24,6 +24,7 @@ import FormAppointment from "./appointement/FormAppointemnt";
 
 // auth section
 import Login from "./login/Login";
+import SignUpForm from "./signup/SignUpForm";
 
 export {
   Header,
@@ -48,4 +49,5 @@ export {
   FormAppointment,
   // auth section
   Login,
+  SignUpForm,
 };
