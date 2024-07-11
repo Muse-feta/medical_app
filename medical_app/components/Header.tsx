@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image';
 import nav_bg from "@/asset/img/bg/logo_bg_1.png";
+import Link from 'next/link';
 
 const Header = () => {
   return (
@@ -76,23 +77,23 @@ const Header = () => {
                 <nav className="main-menu d-none d-lg-inline-block">
                   <ul>
                     <li className="">
-                      <a href="/">Home</a>
+                      <Link href="/">Home</Link>
                     </li>
                     <li>
-                      <a href="about.html">About Us</a>
+                      <Link href="/about">About Us</Link>
                     </li>
                     <li className="">
-                      <a href="#">Service</a>
+                      <Link href="service">Service</Link>
                     </li>
 
                     <li>
-                      <a href="contact.html">Contact</a>
+                      <Link href="contact">Contact</Link>
                     </li>
                     <li>
-                      <a href="contact.html">Apointment</a>
+                      <Link href="apointment">Apointment</Link>
                     </li>
                     <li>
-                      <a href="contact.html">Login</a>
+                      <Link href="login">Login</Link>
                     </li>
                   </ul>
                 </nav>

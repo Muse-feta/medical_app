@@ -11,6 +11,10 @@ import Process from "./Process";
 import Faq from "./Faq";
 import Breadcumb from "./Breadcumb";
 
+// about sections
+import About_first_section from "./about/firstSection";
+import WhyChooseAbout from "./about/WhyChooseAbout";
+
 export { 
     Header, 
     Footer,
@@ -23,6 +27,9 @@ export {
     Counter,
     Process,
     Faq,
-    Breadcumb
+    Breadcumb,
+    // about sections
+    About_first_section,
+    WhyChooseAbout
 };
 
