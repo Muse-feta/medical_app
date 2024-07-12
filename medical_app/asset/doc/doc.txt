@@ -1,0 +1,67 @@
+Admin Pages
+Admin Dashboard (/admin)
+
+Overview of the system's status.
+Summary of recent activities (e.g., recent appointments, new user signups).
+Links to other admin pages (manage appointments, manage users, etc.).
+Manage Appointments (/admin/appointments)
+
+List of all appointments.
+Filter and sort appointments by date, patient, or status.
+Options to add, edit, or delete appointments.
+View detailed information about each appointment.
+Import Appointments: Option for receptionists to import patient data and create appointments manually if not booked online.
+Manage Users (/admin/users)
+
+List of all users (patients, doctors, staff).
+Filter and sort users by role, name, or status.
+Options to add, edit, or delete users.
+View detailed information about each user.
+Add Receptionist: Option to add new receptionists.
+Patient Pages
+Book Appointment (/patients/book-appointment)
+
+Form for patients to select a doctor, date, and time for their appointment.
+Show available slots based on the selected doctor and date.
+Confirmation message after booking.
+View Appointments (/patients/appointments)
+
+List of all upcoming and past appointments for the logged-in patient.
+Option to cancel or reschedule upcoming appointments.
+View detailed information about each appointment.
+Backend (API)
+Appointments API (/api/appointments)
+
+GET: Fetch list of appointments (with filters for admin, specific user for patients).
+POST: Create a new appointment (used by patients to book an appointment).
+PUT: Update an existing appointment (used by admin to edit appointments).
+DELETE: Delete an appointment (used by admin to remove appointments).
+POST /import: Import appointments data (used by receptionists to create appointments manually).
+Users API (/api/users)
+
+GET: Fetch list of users (with filters for admin).
+POST: Create a new user (used by admin to add new users).
+PUT: Update an existing user (used by admin to edit user details).
+DELETE: Delete a user (used by admin to remove users).
+POST /import: Import patient data (used by receptionists to add patients manually).
+Signup and Login Pages
+Signup (/signup)
+
+Form for new users to create an account.
+Includes fields for email, password, and any additional necessary information.
+Validation and error handling.
+Login (/login)
+
+Form for existing users to log in.
+Includes fields for email and password.
+Authentication and error handling.
+Additional Considerations
+Receptionist Functionality:
+
+Ensure that receptionists have access to appropriate sections for importing data and managing appointments.
+Implement necessary permissions to restrict access to sensitive data.
+Data Import:
+
+Provide a clear interface for importing data, possibly via file upload (e.g., CSV) or manual entry forms.
+Validate the imported data to avoid errors.
+Security:
