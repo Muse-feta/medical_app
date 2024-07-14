@@ -26,7 +26,7 @@ model UserInfo {
   userId    Int      @unique
   password  String
   phone     String
-  role      String
+  role      String   @default("USER")
   user      User     @relation(fields: [userId], references: [id])
 }
 
