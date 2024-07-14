@@ -19,6 +19,7 @@ export const POST = async (req: NextRequest) => {
     if (user) {
       return NextResponse.json({
         success: false,
+        status: 400,
         message: "User already exists",
       });
     }
@@ -46,6 +47,7 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json({
       success: true,
+      status: 201,
       message: "User created successfully",
       data: {
         newUser,
@@ -53,6 +55,6 @@ export const POST = async (req: NextRequest) => {
     });
   } catch (error: any) {
     console.log("error occurring in server", error.message);
-    NextResponse.json({ success: false, message: error.message });
+    NextResponse.json({ success: false, status: 500, message: error.message });
   }
 };
