@@ -1,16 +1,23 @@
 "use client";
+import { Toaster, toast } from "sonner";
 import React, { useState } from "react";
 import Image from "next/image";
 import form_bg from "@/asset/img/bg/contact_form_bg.png";
 import Link from "next/link";
+import authService from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
 const SignUpForm: React.FC = () => {
+  const router = useRouter();
   const [formValues, setFormValues] = useState({
+    firstname: "",
+    lastname: "",
     email: "",
+    phone: "",
     password: "",
-    confirmPassword: "",
-    username: "",
   });
+
+  // check all fields are filled
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -23,8 +30,40 @@ const SignUpForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Here you can add your form submission logic
-    // For example, send formValues to your API
+    if (
+      formValues.firstname === "" ||
+      formValues.lastname === "" ||
+      formValues.email === "" ||
+      formValues.password === ""
+    ) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    try {
+      const res = await authService.signUp(formValues);
+      console.log(res);
+      if (res.status === 201) {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+      // reset form values
+      setFormValues({
+        firstname: "",
+        lastname: "",
+        email: "",
+        phone: "",
+        password: "",
+      });
+      // redirect to login page
+      setTimeout(() => {
+        router.push("/login");
+      }, 3000);
+    } catch (error: any) {
+      console.log(error);
+      toast.error("Something went wrong, please try again later");
+    }
   };
 
   return (
@@ -44,10 +83,23 @@ const SignUpForm: React.FC = () => {
                   <input
                     type="text"
                     className="form-control"
-                    name="username"
-                    id="username"
-                    placeholder="Username"
-                    value={formValues.username}
+                    name="firstname"
+                    id="firstname"
+                    placeholder="First Name"
+                    value={formValues.firstname}
+                    onChange={handleChange}
+                  />
+                  <i className="fal fa-user"></i>
+                </div>
+
+                <div className="form-group col-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="lastname"
+                    id="firstname"
+                    placeholder="Last Name"
+                    value={formValues.lastname}
                     onChange={handleChange}
                   />
                   <i className="fal fa-user"></i>
@@ -68,25 +120,25 @@ const SignUpForm: React.FC = () => {
 
                 <div className="form-group col-12">
                   <input
-                    type="password"
+                    type="text"
                     className="form-control"
-                    name="password"
-                    id="password"
-                    placeholder="Password"
-                    value={formValues.password}
+                    name="phone"
+                    id="phone"
+                    placeholder="Phone"
+                    value={formValues.phone}
                     onChange={handleChange}
                   />
-                  <i className="fal fa-lock"></i>
+                  <i className="fal fa-phone"></i>
                 </div>
 
                 <div className="form-group col-12">
                   <input
                     type="password"
                     className="form-control"
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    placeholder="Confirm Password"
-                    value={formValues.confirmPassword}
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                    value={formValues.password}
                     onChange={handleChange}
                   />
                   <i className="fal fa-lock"></i>
@@ -113,6 +165,7 @@ const SignUpForm: React.FC = () => {
           </form>
         </div>
       </div>
+      <Toaster richColors position="top-left" />
     </div>
   );
 };

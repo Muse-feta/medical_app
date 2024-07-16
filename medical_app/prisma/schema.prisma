@@ -14,7 +14,7 @@ model User {
   email                   String      @unique
   forgotPasswordToken     String?  
   forgotPasswordTokenExpiry DateTime? 
-  verifyToken             String?  
+  verifyToken             String?     @unique  
   verifyTokenExpiry       DateTime? 
   createdAt               DateTime    @default(now())
   updatedAt               DateTime    @updatedAt
