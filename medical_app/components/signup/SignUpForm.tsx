@@ -45,21 +45,22 @@ const SignUpForm: React.FC = () => {
       console.log(res);
       if (res.status === 201) {
         toast.success(res.message);
+        // reset form values
+        setFormValues({
+          firstname: "",
+          lastname: "",
+          email: "",
+          phone: "",
+          password: "",
+        });
+        // redirect to login page
+        setTimeout(() => {
+          router.push("/verification");
+        }, 3000);
       } else {
         toast.error(res.message);
       }
-      // reset form values
-      setFormValues({
-        firstname: "",
-        lastname: "",
-        email: "",
-        phone: "",
-        password: "",
-      });
-      // redirect to login page
-      setTimeout(() => {
-        router.push("/login");
-      }, 3000);
+     
     } catch (error: any) {
       console.log(error);
       toast.error("Something went wrong, please try again later");

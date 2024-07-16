@@ -18,9 +18,19 @@ const login = async (formData: any) => {
     }
 }
 
+const forgotPassword = async (email: string) => {
+    try {
+        const response = await axios.post('/api/users/forgotPassword', { email });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 const authService = {
     signUp,
-    login
+    login,
+    forgotPassword
 }
 
 export default authService

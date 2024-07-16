@@ -12,7 +12,7 @@ model User {
   firstname               String
   lastname                String
   email                   String      @unique
-  forgotPasswordToken     String?  
+  forgotPasswordToken     String?     @unique
   forgotPasswordTokenExpiry DateTime? 
   verifyToken             String?     @unique  
   verifyTokenExpiry       DateTime? 

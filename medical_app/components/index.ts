@@ -26,6 +26,9 @@ import FormAppointment from "./appointement/FormAppointemnt";
 import Login from "./login/Login";
 import SignUpForm from "./signup/SignUpForm";
 
+// forgot password
+import ForgotPassword from "./ForgotPassword";
+
 export {
   Header,
   Footer,
@@ -50,4 +53,6 @@ export {
   // auth section
   Login,
   SignUpForm,
+  // forgot password
+  ForgotPassword,
 };

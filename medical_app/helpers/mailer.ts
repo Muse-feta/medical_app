@@ -1,5 +1,6 @@
 import "server-only"
 import bcryptjs from "bcryptjs"
+import jwt from "jsonwebtoken";
 var nodemailer = require("nodemailer");
 import { PrismaClient } from "@prisma/client"
 import { Html } from "next/document";
@@ -10,8 +11,17 @@ export const mailer = async ({email, emailType, userId}: any) => {
     try {
         console.log("mailer", email, emailType, userId)
         // hashed password
-        const salt = await bcryptjs.genSaltSync(10)
-        const hashedId = await bcryptjs.hash(userId.toString(), salt)
+        // const salt = await bcryptjs.genSaltSync(10)
+        // const hashedId = await bcryptjs.hash(userId.toString(), salt)
+        const secret = process.env.SECRET;
+        if (!secret) {
+          throw new Error("JWT secret is not defined");
+        }
+        const data = {
+          id: userId,
+          email: email,
+        }
+        const hashedId = jwt.sign(data, secret);
 
         // updating user verification token
         if(emailType === "VERIFY"){
