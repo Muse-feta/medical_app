@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import bcryptjs from "bcryptjs";
+import { mailer } from "@/helpers/mailer";
 
 const prisma = new PrismaClient();
 
@@ -44,6 +45,9 @@ export const POST = async (req: NextRequest) => {
       });
       return user;
     });
+
+    // send verification email
+    await mailer({ email: body.email, emailType: "VERIFY", userId: newUser.id });
 
     return NextResponse.json({
       success: true,
