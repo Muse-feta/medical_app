@@ -7,39 +7,16 @@ const prisma = new PrismaClient();
 export const POST = async (req: NextRequest) => {
   try {
     const body = await req.json();
-    const { token, password } = body;
-
-    // check if token is valid
-    const user = await prisma.user.findFirst({
-      where: {
-        forgotPasswordToken: token,
-      },
-    });
-
-    // if token is not valid
-    if (!user) {
-      return NextResponse.json({ message: "Invalid token" }, { status: 400 });
-    }
-
-    // updating user verification token
-    await prisma.user.update({
-      where: {
-        forgotPasswordToken: token,
-      },
-      data: {
-        verifyToken: null,
-        verifyTokenExpiry: null,
-      },
-    });
-
+    const {  password, userId } = body;
+    console.log("body of reset password", body);
     // hashed password
     const salt = await bcryptjs.genSaltSync(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
     // if token is valid
-    const res = prisma.userInfo.update({
+    const res = await prisma.userInfo.update({
       where: {
-        userId: user.id,
+        userId: userId,
       },
       data: {
         password: hashedPassword,

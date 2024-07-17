@@ -1,47 +1,88 @@
 "use client";
-import axios from 'axios';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import axios from "axios";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import form_bg from "@/asset/img/bg/contact_form_bg.png";
-import { Toaster } from 'sonner';
+import { toast, Toaster } from "sonner";
+import { useRouter } from "next/navigation";
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
-    const [error, setError] = useState("");
-      const [isVerified, setIsVerified] = useState(false);
+  const [error, setError] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const router = useRouter();
 
+  console.log(userId);
 
-        // const verifyUserEmail = async () => {
-        //   try {
-        //     await axios.post("/api/users/resetPassword", { token, password });
-        //     setIsVerified(true);
-        //   } catch (error: any) {
-        //     console.log(error.message);
-        //     setError(error.message);
-        //   }
-        // };
+  // const verifyUserEmail = async () => {
+  //   try {
+  //     await axios.post("/api/users/resetPassword", { token, password });
+  //     setIsVerified(true);
+  //   } catch (error: any) {
+  //     console.log(error.message);
+  //     setError(error.message);
+  //   }
+  // };
 
-        useEffect(() => {
-          const token = window.location.search.split("=")[1];
-          setToken(token || "");
-        }, []);
+  useEffect(() => {
+    const token = window.location.search.split("=")[1];
+    setToken(token || "");
+    // console.log(token)
+  }, []);
 
-        const handleLogin  = async (e: React.FormEvent<HTMLFormElement>) => {
-          try {
-                const res = await axios.post("/api/users/resetPassword", { token, password });
-                if(res.status === 200) {
-                  setIsVerified(true);
-                } else {
-                  setIsVerified(false);
-                }
-          } catch (error: any) {
-            console.log(error)
-            setError(error.message);
-          }
+  useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        const res = await axios.post("/api/users/verifyForgotToken", { token });
+        console.log("res verifyForgotToken", res);
+        // handle the response if necessary
+        if (res.data.status === 200) {
+          setUserId(res.data.userId);
+          setIsVerified(true);
+        } else {
+          toast.error(res.data.message);
+          setError(true);
         }
+      } catch (error) {
+        // handle the error if necessary
+        console.error("Error verifying token:", error);
+        setError(true);
+      }
+    };
 
+    verifyToken();
+  }, [token]);
 
+  const handleReset = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      if (isVerified) {
+        const res = await axios.post("/api/users/resetPassword", {
+          password,
+          userId,
+          
+        });
+
+        console.log("res of resetPassword", res);
+
+        if(res.status === 200) {
+          toast.success(res.data.message);
+          setTimeout(() => {
+            router.push("/login");
+          }, 3000);
+        }else {
+          toast.error(res.data.message);
+          setError(true);
+        }
+        
+      }
+    } catch (error: any) {
+      console.log(error);
+      setError(true);
+    }
+  };
 
   return (
     <div>
@@ -50,15 +91,13 @@ const ResetPasswordPage = () => {
           <div className="space-bottom">
             <div className="container">
               <form
-                onSubmit={handleLogin}
+                onSubmit={handleReset}
                 className="contact-form ajax-contact"
                 style={{ backgroundImage: `url(${form_bg.src})` }}
               >
                 <div className="input-wrap">
-                  <h2 className="sec-title">Login</h2>
+                  <h2 className="sec-title">Reset Password</h2>
                   <div className="row">
-                    
-
                     <div className="form-group col-12">
                       <input
                         type="password"
@@ -81,7 +120,9 @@ const ResetPasswordPage = () => {
                       </p>
                     </div>
                     <div className="form-btn col-12">
-                      <button className="th-btn btn-fw">Login</button>
+                      <button type="submit" className="th-btn btn-fw">
+                        Reset
+                      </button>
                     </div>
                   </div>
                   <p className="form-messages mb-0 mt-3"></p>
@@ -95,12 +136,45 @@ const ResetPasswordPage = () => {
       )}
 
       {error && (
-    <div>
-      Invalid Token
-    </div>
+        <div>
+          <div className="bg-gray-100 flex items-center justify-center min-h-screen">
+            <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md">
+              <div className="flex justify-center mb-4">
+                <div className="bg-red-100 p-3 rounded-full">
+                  <svg
+                    className="w-8 h-8 text-red-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <h1 className="text-2xl font-bold mb-2">
+                Oops! Something went wrong
+              </h1>
+              <p className="text-gray-600 mb-4">
+                Sorry, an unexpected error has occurred. Please try again later.
+              </p>
+              <Link
+                href="/forgot-password"
+                className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+              >
+                Try Again!
+              </Link>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
-}
+};
 
-export default ResetPasswordPage
+export default ResetPasswordPage;

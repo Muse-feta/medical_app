@@ -20,10 +20,21 @@ export const POST = async (req: NextRequest) => {
             return NextResponse.json({ message: "User does not exist" }, { status: 400 });
         }
 
+        // reset password token
+        // await prisma.user.update({
+        //     where: {
+        //         id: user.id
+        //     },
+        //     data: {
+        //         forgotPasswordToken: null,
+        //         forgotPasswordTokenExpiry: null
+        //     }
+        // });
+
         // if user exists
         await mailer({ email: email, emailType: "RESET", userId: user.id });
 
-        return NextResponse.json({ message: "Email sent" }, { status: 200 });
+        return NextResponse.json({ message: "Email sent", status: 200 });
     } catch (error) {
         console.log(error);
 
