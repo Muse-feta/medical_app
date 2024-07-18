@@ -28,6 +28,7 @@ export const POST = async (req: NextRequest) => {
         data: {
           verifyToken: null,
           verifyTokenExpiry: null,
+          isVerified: true,
         },
       });
 

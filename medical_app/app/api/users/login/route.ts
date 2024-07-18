@@ -51,10 +51,21 @@ export const POST = async (req: NextRequest) => {
         });
       }
 
+      // check if the user account is verified
+
+      if (!user.isVerified) {
+        return NextResponse.json({
+          success: false,
+          status: 400,
+          message: "Please verify your account first",
+        });
+      }
+
+
       //   // create jwt token data
 
       const tokenData  = {
-        id: user?.id,
+        id: userInfo?.userId,
         firstname: user?.firstname,
         lastname: user?.lastname,
         email: user?.email,

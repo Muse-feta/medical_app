@@ -16,6 +16,7 @@ model User {
   forgotPasswordTokenExpiry DateTime? 
   verifyToken             String?     @unique  
   verifyTokenExpiry       DateTime? 
+  isVerified              Boolean     @default(false)
   createdAt               DateTime    @default(now())
   updatedAt               DateTime    @updatedAt
   userInfo                UserInfo?
