@@ -5,6 +5,7 @@ import "@/asset/css/app.min.css";
 import "@/asset/css/style.css";
 import "@/asset/css/fontawesome.min.css";
 import { Footer, Header, HeaderTop } from "@/components";
+import AuthContextProvider from "@/context/authContext/AuthContextProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,12 +21,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {/* <HeaderTop/> */}
-        <Header/>
-        {children}
-        <Footer />
-      </body>
+      <AuthContextProvider>
+        <body className={inter.className}>
+          {/* <HeaderTop/> */}
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </AuthContextProvider>
     </html>
   );
 }

@@ -2,8 +2,10 @@ import React from 'react'
 import Image from 'next/image';
 import nav_bg from "@/asset/img/bg/logo_bg_1.png";
 import Link from 'next/link';
+import { useAuth } from '@/context/authContext/AuthContextProvider';
 
 const Header = () => {
+
   return (
     <header className="th-header header-layout1">
       <div className="header-top">
