@@ -20,15 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <AuthContextProvider>
+    <AuthContextProvider>
+      <html lang="en">
         <body className={inter.className}>
           {/* <HeaderTop/> */}
           <Header />
           {children}
           <Footer />
         </body>
-      </AuthContextProvider>
-    </html>
+      </html>
+    </AuthContextProvider>
   );
 }

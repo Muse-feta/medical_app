@@ -1,10 +1,19 @@
+"use client"
 import React from 'react'
 import Image from 'next/image';
 import nav_bg from "@/asset/img/bg/logo_bg_1.png";
 import Link from 'next/link';
 import { useAuth } from '@/context/authContext/AuthContextProvider';
+import axios from 'axios';
 
 const Header = () => {
+
+  const { isLogedIn, userData } = useAuth();
+
+  const handleLogout = async () => {
+    await axios.get("/api/users/logout");
+    window.location.reload();
+  }
 
   return (
     <header className="th-header header-layout1">
@@ -31,32 +40,40 @@ const Header = () => {
                 </ul>
               </div>
             </div>
-            <div className="col-auto">
-              <div className="header-links">
-                <ul>
-                  <li>
-                    <div className="social-links">
-                      <span className="social-title">Follow Us On: </span>
-                      <a href="https://www.facebook.com/">
-                        <i className="fab fa-facebook-f"></i>
-                      </a>
-                      <a href="https://www.twitter.com/">
-                        <i className="fab fa-twitter"></i>
-                      </a>
-                      <a href="https://www.linkedin.com/">
-                        <i className="fab fa-linkedin-in"></i>
-                      </a>
-                      <a href="https://www.instagram.com/">
-                        <i className="fab fa-instagram"></i>
-                      </a>
-                      <a href="https://www.youtube.com/">
-                        <i className="fab fa-youtube"></i>
-                      </a>
-                    </div>
-                  </li>
-                </ul>
+            {isLogedIn === true ? (
+              // show welcom username
+              <div className="col-auto">
+                <span className="social-title text-white">Welcome: </span>
+                <span className="social-title text-white">{userData?.firstName} </span>
               </div>
-            </div>
+            ) : (
+              <div className="col-auto">
+                <div className="header-links">
+                  <ul>
+                    <li>
+                      <div className="social-links">
+                        <span className="social-title">Follow Us On: </span>
+                        <a href="https://www.facebook.com/">
+                          <i className="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.twitter.com/">
+                          <i className="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/">
+                          <i className="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.instagram.com/">
+                          <i className="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/">
+                          <i className="fab fa-youtube"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -89,10 +106,12 @@ const Header = () => {
                       <Link href="appointement">appointement</Link>
                     </li>
                     <li>
-                      <Link href="contact">Contact</Link> 
+                      <Link href="contact">Contact</Link>
                     </li>
                     <li>
-                      <Link href="login">Login</Link>
+                      {isLogedIn ? (
+                        <Link href='' onClick={handleLogout}>Logout</Link>
+                      ) : <Link href="/login">Login</Link>}
                     </li>
                   </ul>
                 </nav>
