@@ -2,7 +2,6 @@ import React from 'react'
 import Image from 'next/image';
 import nav_bg from "@/asset/img/bg/logo_bg_1.png";
 import Link from 'next/link';
-import axios from 'axios';
 import { useAuth } from '@/context/authContext/AuthContextProvider';
 
 const Header = () => {
