@@ -20,12 +20,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {/* <HeaderTop/> */}
-        <Header/>
-        {children}
-        <Footer />
-      </body>
+      <AuthContextProvider>
+        <body className={inter.className}>
+          {/* <HeaderTop/> */}
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </AuthContextProvider>
     </html>
   );
 }

@@ -6,12 +6,9 @@ import Link from "next/link";
 import { toast, Toaster } from "sonner";
 import authService from "@/services/auth.service";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/authContext/AuthContextProvider";
 
 const Login: React.FC = () => {
   const router = useRouter();
-  const { setIsLogedIn } = useAuth();
-  
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -39,10 +36,9 @@ const Login: React.FC = () => {
       console.log(res);
       if (res.status === 200) {
         toast.success(res.message);
-        setIsLogedIn(true);
         // redirect to homepage
         setTimeout(() => {
-          window.location.href = "/";
+          router.push("/");
         }, 3000);
       } else {
         toast.error(res.message);

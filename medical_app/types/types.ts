@@ -3,7 +3,7 @@ export interface decodedToken {
     email: string
 };
 
-// export interface children{
-//     children: React.ReactNode
-// }
+export interface children{
+    children: React.ReactNode
+}
 

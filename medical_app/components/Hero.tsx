@@ -1,4 +1,3 @@
-"use client"
 import React from 'react'
 import heroImg from "@/asset/img/hero/hero_bg_2_1.jpg";
 
