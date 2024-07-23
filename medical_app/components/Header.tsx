@@ -3,7 +3,6 @@ import React from 'react'
 import Image from 'next/image';
 import nav_bg from "@/asset/img/bg/logo_bg_1.png";
 import Link from 'next/link';
-<<<<<<< HEAD
 import { useAuth } from '@/context/authContext/AuthContextProvider';
 import axios from 'axios';
 
@@ -16,10 +15,6 @@ const Header = () => {
     window.location.reload();
   }
 
-=======
-
-const Header = () => {
->>>>>>> parent of ac85760 (finished useContext)
   return (
     <header className="th-header header-layout1">
       <div className="header-top">
