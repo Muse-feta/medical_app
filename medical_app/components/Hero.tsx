@@ -9,10 +9,8 @@ import shape2 from "@/asset/img/hero/hero_shape_2_2.svg";
 import shape3 from "@/asset/img/hero/hero_shape_2_3.svg";
 import shape4 from "@/asset/img/hero/hero_shape_2_4.svg";
 import shape5 from "@/asset/img/hero/hero_shape_2_5.svg";
-import { useAuth } from '@/context/authContext/AuthContextProvider';
 
 const Hero = () => {
-  console.log(useAuth())
   return (
     <div
       className="th-hero-wrapper hero-2 "
