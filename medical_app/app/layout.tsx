@@ -4,8 +4,10 @@ import "./globals.css";
 import "@/asset/css/app.min.css";
 import "@/asset/css/style.css";
 import "@/asset/css/fontawesome.min.css";
-import { Footer, Header, HeaderTop } from "@/components";
+// import { Footer, Header, HeaderTop } from "@/components";
 import AuthContextProvider from "@/context/authContext/AuthContextProvider";
+import Header from "@/components/Header";
+import { Footer } from "react-day-picker";
 
 const inter = Inter({ subsets: ["latin"] });
 

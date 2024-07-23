@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from 'next/image';
 import error_img from "@/asset/img/theme-img/error.svg";
-import { Breadcumb } from '@/components';
+import Breadcumb from '@/components/Breadcumb';
+// import { Breadcumb } from '@/components';
 
 const NotFound = () => {
   return (

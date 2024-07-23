@@ -41,3 +41,4 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
     }
 }
+
