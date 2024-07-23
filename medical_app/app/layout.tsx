@@ -4,10 +4,8 @@ import "./globals.css";
 import "@/asset/css/app.min.css";
 import "@/asset/css/style.css";
 import "@/asset/css/fontawesome.min.css";
-// import { Footer, Header, HeaderTop } from "@/components";
+import { Footer, Header, HeaderTop } from "@/components";
 import AuthContextProvider from "@/context/authContext/AuthContextProvider";
-import Header from "@/components/Header";
-import { Footer } from "react-day-picker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,15 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthContextProvider>
-      <html lang="en">
+    <html lang="en">
+      <AuthContextProvider>
         <body className={inter.className}>
           {/* <HeaderTop/> */}
           <Header />
           {children}
           <Footer />
         </body>
-      </html>
-    </AuthContextProvider>
+      </AuthContextProvider>
+    </html>
   );
 }
