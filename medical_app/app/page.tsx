@@ -1,13 +1,13 @@
 
-// import { About, Add, Counter, Faq, Hero, Process, Services, WhyChoose } from "@/components";
+import { About, Add, Counter, Faq, Hero, Process, Services, WhyChoose } from "@/components";
 
-import About from "@/components/About";
-import Add from "@/components/Add";
-import Counter from "@/components/Counter";
-import Hero from "@/components/Hero";
-import Process from "@/components/Process";
-import Services from "@/components/Services";
-import WhyChoose from "@/components/WhyChoose";
+// import About from "@/components/About";
+// import Add from "@/components/Add";
+// import Counter from "@/components/Counter";
+// import Hero from "@/components/Hero";
+// import Process from "@/components/Process";
+// import Services from "@/components/Services";
+// import WhyChoose from "@/components/WhyChoose";
 import Image from "next/image";
 
 export default function Home() {
