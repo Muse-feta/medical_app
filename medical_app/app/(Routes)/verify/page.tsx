@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { Breadcumb } from "@/components";
 import { tokenDecoder } from "@/helpers/tokenDecoder";
 import { decodedToken } from "@/types/types";
 import { toast, Toaster } from "sonner";

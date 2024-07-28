@@ -1,4 +1,5 @@
-import { Breadcumb, SignUpForm } from '@/components'
+import Breadcumb from '@/components/Breadcumb'
+import SignUpForm from '@/components/signup/SignUpForm'
 import React from 'react'
 
 const page = () => {

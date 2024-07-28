@@ -1,4 +1,6 @@
-import { AddressMap, Breadcumb, OpenHours } from '@/components'
+import Breadcumb from '@/components/Breadcumb';
+import AddressMap from '@/components/contact/AdressMap';
+import OpenHours from '@/components/contact/OpenHours';
 import { Metadata } from 'next'
 import React from 'react'
 

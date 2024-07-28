@@ -1,4 +1,5 @@
-import { Breadcumb, FormAppointment } from '@/components'
+import FormAppointment from '@/components/appointement/FormAppointemnt'
+import Breadcumb from '@/components/Breadcumb'
 import React from 'react'
 
 const Appointment = () => {
