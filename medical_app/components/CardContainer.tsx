@@ -7,7 +7,7 @@ const CardContainer = (props: React.HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       {...props}
-      className={cn("flex w-full flex-col gap-3 rounded-xl border p-3 px-5 shadow", props.className)}
+      className={cn("flex w-full flex-col gap-3 rounded-xl border p-3 px-5 shadow-md", props.className)}
     />
   );
 }

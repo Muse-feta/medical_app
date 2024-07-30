@@ -16,3 +16,10 @@ export type CardProps = {
   description: string;
 };
 
+// used for recent appointements prop type
+export type RecentProps = {
+  name: string;
+  email: string;
+  date: string;
+};
+
