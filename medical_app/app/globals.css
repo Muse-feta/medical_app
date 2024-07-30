@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.dashboardContainer {
+  min-height: 100vh; /* Equivalent to min-h-screen */
+  width: 100%;       /* Equivalent to w-full */
+  background-color: #ffffff; /* Equivalent to bg-white */
+  color: #000000;    /* Equivalent to text-black */
+  display: flex;     /* Equivalent to flex */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

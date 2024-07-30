@@ -7,7 +7,11 @@ import Hero from "@/components/Hero";
 import Process from "@/components/Process";
 import Services from "@/components/Services";
 import WhyChoose from "@/components/WhyChoose";
+
 import Image from "next/image";
+
+
+ 
 
 export default function Home() {
   return (
