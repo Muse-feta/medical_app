@@ -9,49 +9,38 @@ import Link from "next/link";
 import { toast, Toaster } from "sonner";
 import authService from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { z, ZodType } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 const Login: React.FC = () => {
+  const schema: ZodType<FormValues> = z.object({
+    email: z.string().email({ message: "Invalid email" }),
+    password: z.string().min(8, { message: "Password must be at least 8 characters" }),
+  })
+
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({resolver: zodResolver(schema)})
   const router = useRouter();
-  const [formValues, setFormValues] = useState({
-    email: "",
-    password: "",
-  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // check all fields are filled
-    if (formValues.email === "" || formValues.password === "") {
-      toast.error("Please fill in all fields");
-      return;
-    }
+  const handleLogin = async (formData: FormValues) => {
 
     try {
-      const res = await authService.login(formValues);
+      const res = await authService.login(formData);
       console.log(res);
       if (res.status === 200) {
         toast.success(res.message);
         // redirect to homepage
-        setTimeout(() => {
-          router.push("/");
-        }, 3000);
+        window.location.href = "/";
       } else {
         toast.error(res.message);
       }
-
-      // reset form values
-      setFormValues({
-        email: "",
-        password: "",
-      });
+     
     } catch (error) {
       console.log("Error", error);
       toast.error("Something went wrong");
@@ -63,7 +52,7 @@ const Login: React.FC = () => {
       <div className="space-bottom">
         <div className="container">
           <form
-            onSubmit={handleLogin}
+            onSubmit={handleSubmit(handleLogin)}
             className="contact-form ajax-contact"
             style={{ backgroundImage: `url(${form_bg.src})` }}
           >
@@ -74,11 +63,17 @@ const Login: React.FC = () => {
                   <input
                     type="email"
                     className="form-control"
-                    name="email"
+                    // name="email"
                     id="email"
-                    onChange={handleChange}
+                    // onChange={handleChange}
                     placeholder="Email Address"
+                    {...register("email")}
                   />
+                  {errors.email && (
+                    <p className="text-red-400 mx-3">
+                      {errors.email.message}
+                    </p>
+                  )}
                   <i className="fal fa-envelope"></i>
                 </div>
 
@@ -86,11 +81,17 @@ const Login: React.FC = () => {
                   <input
                     type="password"
                     className="form-control"
-                    name="password"
+                    // name="password"
                     id="password"
-                    onChange={handleChange}
+                    // onChange={handleChange}
                     placeholder="Your Password"
+                    {...register("password")}
                   />
+                  {errors.password && (
+                    <p className="text-red-400 mx-3">
+                      {errors.password.message}
+                    </p>
+                  )}
                   <i className="fal fa-lock"></i>
                 </div>
                 <div className="lg:ml-[30px] text-[12px] md:text-[15px]">
@@ -104,7 +105,7 @@ const Login: React.FC = () => {
                   </p>
                 </div>
                 <div className="form-btn col-12">
-                  <button className="th-btn btn-fw">Login</button>
+                  <button type="submit" disabled={isSubmitting} className="th-btn btn-fw">{isSubmitting ? "Submitting..." : "Login"}</button>
                 </div>
               </div>
               <p className="form-messages mb-0 mt-3"></p>

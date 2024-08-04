@@ -1,9 +1,17 @@
+import { useAuth } from '@/context/authContext';
+import axios from 'axios';
 import Link from 'next/link'
 import React from 'react'
 
 type Props = {}
 
 const MainNav = (props: Props) => {
+   const { isLogedIn, userData } = useAuth();
+   console.log("isLogedIn", isLogedIn);
+   const handleLogout = async () => {
+     await axios.get("/api/users/logout");
+     window.location.reload();
+   };
   return (
     <div className="hidden md:flex">
       <nav className="main-menu d-none d-lg-inline-block">
@@ -21,7 +29,10 @@ const MainNav = (props: Props) => {
             <a href="/contact">Contact</a>
           </li>
           <li>
+            {isLogedIn ? <a className=' cursor-pointer' onClick={handleLogout}>Logout</a>
+:
             <a href="/login">Login</a>
+            }
           </li>
         </ul>
       </nav>

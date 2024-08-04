@@ -9,57 +9,56 @@ import form_bg from "@/asset/img/bg/contact_form_bg.png";
 import Link from "next/link";
 import authService from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { z, ZodType } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+interface FormValues {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+}
 
 const SignUpForm: React.FC = () => {
   const router = useRouter();
-  const [formValues, setFormValues] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    password: "",
-  });
+  const schema: ZodType<FormValues> = z
+    .object({
+      firstname: z.string().min(1, "Please enter your first name"),
+      lastname: z.string().min(1, "Please enter your last name"),
+      email: z
+        .string()
+        .min(1, "Please enter your email")
+        .email("Please enter a valid email"),
+      phone: z
+        .string()
+        .min(10, { message: "please inter a valid phone number" })
+        .max(13, { message: "please Inter a valid phone number" }),
+      password: z
+        .string()
+        .min(8, "Password must be at least 6 characters long"),
+      confirmPassword: z.string().min(1, "Please confirm your password"),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    });
 
-  // check all fields are filled
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({resolver: zodResolver(schema)})
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
 
-    if (
-      formValues.firstname === "" ||
-      formValues.lastname === "" ||
-      formValues.email === "" ||
-      formValues.password === ""
-    ) {
-      toast.error("Please fill in all fields");
-      return;
-    }
+  const handleAdd = async (formData: FormValues) => {
 
     try {
-      const res = await authService.signUp(formValues);
+      const res = await authService.signUp(formData);
       console.log(res);
       if (res.status === 201) {
         toast.success(res.message);
-        // reset form values
-        setFormValues({
-          firstname: "",
-          lastname: "",
-          email: "",
-          phone: "",
-          password: "",
-        });
-        // redirect to login page
-        setTimeout(() => {
-          router.push("/verification");
-        }, 3000);
+      
+         router.push("/verification");
       } else {
         toast.error(res.message);
       }
@@ -75,8 +74,7 @@ const SignUpForm: React.FC = () => {
       <div className="space-bottom">
         <div className="container">
           <form
-            onSubmit={handleSubmit}
-            method="POST"
+            onSubmit={handleSubmit(handleAdd)}
             className="contact-form ajax-contact"
             style={{ backgroundImage: `url(${form_bg.src})` }}
           >
@@ -87,12 +85,15 @@ const SignUpForm: React.FC = () => {
                   <input
                     type="text"
                     className="form-control"
-                    name="firstname"
                     id="firstname"
                     placeholder="First Name"
-                    value={formValues.firstname}
-                    onChange={handleChange}
+                    {...register("firstname")}
                   />
+                  {errors.firstname && (
+                    <p className="text-red-400 mx-3">
+                      {errors.firstname.message}
+                    </p>
+                  )}
                   <i className="fal fa-user"></i>
                 </div>
 
@@ -100,12 +101,15 @@ const SignUpForm: React.FC = () => {
                   <input
                     type="text"
                     className="form-control"
-                    name="lastname"
                     id="firstname"
                     placeholder="Last Name"
-                    value={formValues.lastname}
-                    onChange={handleChange}
+                    {...register("lastname")}
                   />
+                  {errors.lastname && (
+                    <p className="text-red-400 mx-3">
+                      {errors.lastname.message}
+                    </p>
+                  )}
                   <i className="fal fa-user"></i>
                 </div>
 
@@ -113,12 +117,13 @@ const SignUpForm: React.FC = () => {
                   <input
                     type="email"
                     className="form-control"
-                    name="email"
                     id="email"
                     placeholder="Email Address"
-                    value={formValues.email}
-                    onChange={handleChange}
+                    {...register("email")}
                   />
+                  {errors.email && (
+                    <p className="text-red-400 mx-3">{errors.email.message}</p>
+                  )}
                   <i className="fal fa-envelope"></i>
                 </div>
 
@@ -126,12 +131,13 @@ const SignUpForm: React.FC = () => {
                   <input
                     type="text"
                     className="form-control"
-                    name="phone"
                     id="phone"
                     placeholder="Phone"
-                    value={formValues.phone}
-                    onChange={handleChange}
+                    {...register("phone")}
                   />
+                  {errors.phone && (
+                    <p className="text-red-400 mx-3">{errors.phone.message}</p>
+                  )}
                   <i className="fal fa-phone"></i>
                 </div>
 
@@ -139,12 +145,31 @@ const SignUpForm: React.FC = () => {
                   <input
                     type="password"
                     className="form-control"
-                    name="password"
                     id="password"
                     placeholder="Password"
-                    value={formValues.password}
-                    onChange={handleChange}
+                    {...register("password")}
                   />
+                  {errors.password && (
+                    <p className="text-red-400 mx-3">
+                      {errors.password.message}
+                    </p>
+                  )}
+                  <i className="fal fa-lock"></i>
+                </div>
+
+                <div className="form-group col-12">
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    placeholder="Confirm Password"
+                    {...register("confirmPassword")}
+                  />
+                  {errors.confirmPassword && (
+                    <p className="text-red-400 mx-3">
+                      {errors.confirmPassword.message}
+                    </p>
+                  )}
                   <i className="fal fa-lock"></i>
                 </div>
 
@@ -159,8 +184,12 @@ const SignUpForm: React.FC = () => {
                 </div>
 
                 <div className="form-btn col-12">
-                  <button type="submit" className="th-btn btn-fw">
-                    Sign Up
+                  <button
+                    disabled={isSubmitting}
+                    type="submit"
+                    className="th-btn btn-fw"
+                  >
+                    {isSubmitting ? "Submitting..." : "Sign Up"}
                   </button>
                 </div>
               </div>

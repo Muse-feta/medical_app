@@ -8,21 +8,31 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { AlignCenter } from 'lucide-react';
+import { useAuth } from '@/context/authContext';
+import axios from 'axios';
 
 
 
 type Props = {}
 
 const MobileNav = (props: Props) => {
+    const { isLogedIn, userData } = useAuth();
+    console.log("isLogedIn", isLogedIn);
+    const handleLogout = async () => {
+      await axios.get("/api/users/logout");
+      window.location.reload();
+    };
   return (
     <div className="md:hidden">
       <Sheet>
-        <SheetTrigger className='mt-[20px]'>
-          <AlignCenter/>
+        <SheetTrigger className="mt-[20px]">
+          <AlignCenter />
         </SheetTrigger>
-        <SheetContent className='mt-[20px]'>
+        <SheetContent className="mt-[20px]">
           <SheetHeader>
-            <SheetTitle className='mt-[20px]'>Are you absolutely sure?</SheetTitle>
+            <SheetTitle className="mt-[20px]">
+              Are you absolutely sure?
+            </SheetTitle>
             <SheetDescription>
               This action cannot be undone. This will permanently delete your
               account and remove your data from our servers.
@@ -42,8 +52,14 @@ const MobileNav = (props: Props) => {
               <li className="mt-2">
                 <a href="/contact">Contact</a>
               </li>
-              <li className="mt-2">
-                <a href="/login">Login</a>
+              <li>
+                {isLogedIn ? (
+                  <a className=" cursor-pointer" onClick={handleLogout}>
+                    Logout
+                  </a>
+                ) : (
+                  <a href="/login">Login</a>
+                )}
               </li>
             </ul>
           </nav>
