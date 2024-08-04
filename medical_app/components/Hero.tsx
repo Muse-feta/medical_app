@@ -1,4 +1,7 @@
 import React from 'react'
+import "@/asset/css/app.min.css";
+import "@/asset/css/style.css";
+import "@/asset/css/fontawesome.min.css";
 import heroImg from "@/asset/img/hero/hero_bg_2_1.jpg";
 
 import heroImage from "@/asset/img/hero/hero_custom_2.png";

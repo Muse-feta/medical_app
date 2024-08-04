@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import "@/asset/css/app.min.css";
-import "@/asset/css/style.css";
-import "@/asset/css/fontawesome.min.css";
+
 // import AuthContextProvider from "@/context/authContext/AuthContextProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";

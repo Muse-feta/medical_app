@@ -1,4 +1,7 @@
 import React from "react";
+import "@/asset/css/app.min.css";
+import "@/asset/css/style.css";
+import "@/asset/css/fontawesome.min.css";
 
 const AddressMap: React.FC = () => {
   return (

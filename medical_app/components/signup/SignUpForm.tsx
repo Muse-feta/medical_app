@@ -1,4 +1,7 @@
 "use client";
+import "@/asset/css/app.min.css";
+import "@/asset/css/style.css";
+import "@/asset/css/fontawesome.min.css";
 import { Toaster, toast } from "sonner";
 import React, { useState } from "react";
 import Image from "next/image";

@@ -1,5 +1,8 @@
 import React from 'react'
 import faq_bg from "@/asset/img/bg/faq_bg_1.jpg";
+import "@/asset/css/app.min.css";
+import "@/asset/css/style.css";
+import "@/asset/css/fontawesome.min.css";
 
 const Faq = () => {
   return (

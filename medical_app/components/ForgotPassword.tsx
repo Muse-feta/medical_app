@@ -1,4 +1,7 @@
 "use client";
+import "@/asset/css/app.min.css";
+import "@/asset/css/style.css";
+import "@/asset/css/fontawesome.min.css";
 import Link from 'next/link';
 import React from 'react'
 import { toast, Toaster } from 'sonner';

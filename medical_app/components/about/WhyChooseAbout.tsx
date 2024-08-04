@@ -1,5 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
+import "@/asset/css/app.min.css";
+import "@/asset/css/style.css";
+import "@/asset/css/fontawesome.min.css";
 import bg from "@/asset/img/bg/why_bg_3.jpg";
 import title from "@/asset/img/theme-img/title_icon.svg";
 

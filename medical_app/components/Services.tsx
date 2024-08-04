@@ -1,4 +1,7 @@
 import React from 'react'
+import "@/asset/css/app.min.css";
+import "@/asset/css/style.css";
+import "@/asset/css/fontawesome.min.css";
 import Image from 'next/image';
 import bg_img from "@/asset/img/bg/service_bg_1.png";
 import card_img1 from "@/asset/img/bg/service_card_bg.png";

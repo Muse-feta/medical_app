@@ -1,4 +1,7 @@
 import React from 'react'
+import "@/asset/css/app.min.css";
+import "@/asset/css/style.css";
+import "@/asset/css/fontawesome.min.css";
 import Image from 'next/image';
 import cta from "@/asset/img/normal/cta_1.png"
 import cta_bg from "@/asset/img/bg/cta_bg_4.jpg"
