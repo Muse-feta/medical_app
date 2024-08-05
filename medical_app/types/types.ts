@@ -2,7 +2,8 @@ import { LucideIcon } from "lucide-react";
 
 export interface decodedToken {
     id: string,
-    email: string
+    email: string,
+    role: string
 };
 
 export interface children{

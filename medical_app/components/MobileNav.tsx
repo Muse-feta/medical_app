@@ -10,16 +10,18 @@ import {
 import { AlignCenter } from 'lucide-react';
 import { useAuth } from '@/context/authContext';
 import axios from 'axios';
+import { toast, Toaster } from 'sonner';
 
 
 
 type Props = {}
 
 const MobileNav = (props: Props) => {
-    const { isLogedIn, userData } = useAuth();
+    const { isLogedIn, isAdmin, userData } = useAuth();
     console.log("isLogedIn", isLogedIn);
     const handleLogout = async () => {
       await axios.get("/api/users/logout");
+       toast.success("Logout successfully");
       window.location.reload();
     };
   return (
@@ -52,6 +54,11 @@ const MobileNav = (props: Props) => {
               <li className="mt-2">
                 <a href="/contact">Contact</a>
               </li>
+              {isAdmin && (
+                <li>
+                  <a href="/admin/dashboard">Admin</a>
+                </li>
+              )}
               <li>
                 {isLogedIn ? (
                   <a className=" cursor-pointer" onClick={handleLogout}>
@@ -65,6 +72,7 @@ const MobileNav = (props: Props) => {
           </nav>
         </SheetContent>
       </Sheet>
+      <Toaster position="top-left" richColors />
     </div>
   );
 }

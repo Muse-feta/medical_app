@@ -2,14 +2,17 @@ import { useAuth } from '@/context/authContext';
 import axios from 'axios';
 import Link from 'next/link'
 import React from 'react'
+import { toast, Toaster } from 'sonner';
 
 type Props = {}
 
 const MainNav = (props: Props) => {
-   const { isLogedIn, userData } = useAuth();
+   const { isLogedIn,isAdmin, userData } = useAuth();
    console.log("isLogedIn", isLogedIn);
+   console.log("isAdmin", isAdmin);
    const handleLogout = async () => {
      await axios.get("/api/users/logout");
+     toast.success('Logout successfully')
      window.location.reload();
    };
   return (
@@ -28,14 +31,23 @@ const MainNav = (props: Props) => {
           <li>
             <a href="/contact">Contact</a>
           </li>
+          {isAdmin && (
+            <li>
+              <Link href="/admin/dashboard">Admin</Link>
+            </li>
+          )}
           <li>
-            {isLogedIn ? <a className=' cursor-pointer' onClick={handleLogout}>Logout</a>
-:
-            <a href="/login">Login</a>
-            }
+            {isLogedIn ? (
+              <a className=" cursor-pointer" onClick={handleLogout}>
+                Logout
+              </a>
+            ) : (
+              <a href="/login">Login</a>
+            )}
           </li>
         </ul>
       </nav>
+      <Toaster position="top-left" richColors />
     </div>
   );
 }

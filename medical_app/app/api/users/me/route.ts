@@ -10,7 +10,8 @@ export const GET = async (req: NextRequest) => {
    
     try {
       // const body = await req.json();
-      const userId = await getDataFromToken(req);
+      const userData = await getDataFromToken(req);
+      const userId = userData.id;
       console.log("id from me route", userId);
       const user = await prisma.$transaction(async (prisma) => {
         const user = await prisma.user.findUnique({
