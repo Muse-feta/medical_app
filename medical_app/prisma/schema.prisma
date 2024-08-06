@@ -20,6 +20,7 @@ model User {
   createdAt               DateTime    @default(now())
   updatedAt               DateTime    @updatedAt
   userInfo                UserInfo?
+  appointments            Appointment[]
 }
 
 model UserInfo {
@@ -39,6 +40,8 @@ enum status {
 
 model Appointment {
   id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id])
   patientName     String
   email           String
   phoneNumber     String

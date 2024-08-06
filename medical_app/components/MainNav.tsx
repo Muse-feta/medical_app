@@ -53,18 +53,20 @@ const MainNav = (props: Props) => {
               <Link href="/login">Login</Link>
             )}
           </li>
-          <li className="relative top-2">
-            <Popover>
-              <PopoverTrigger className="">
-                <CircleUser className='w-8 h-8'/>
-              </PopoverTrigger>
-              <PopoverContent>
-                {isLogedIn && <p> Wellcome: {userData?.firstName}</p>}
-                <p> Email: {userData?.email}</p>
-                <Link href="/dashboard">View Appointments</Link>
-              </PopoverContent>
-            </Popover>
-          </li>
+          {isLogedIn && (
+            <li className="relative top-2">
+              <Popover>
+                <PopoverTrigger className="">
+                  <CircleUser className="w-8 h-8" />
+                </PopoverTrigger>
+                <PopoverContent>
+                  {isLogedIn && <p> Wellcome: {userData?.firstName}</p>}
+                  <p> Email: {userData?.email}</p>
+                  <Link href="/dashboard">View Appointments</Link>
+                </PopoverContent>
+              </Popover>
+            </li>
+          )}
         </ul>
       </nav>
       <Toaster position="top-left" richColors />

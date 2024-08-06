@@ -8,15 +8,20 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast, Toaster } from "sonner";
 import axios from "axios";
+import { useAuth } from "@/context/authContext";
 
- interface FormTypes {
-   patientName: string;
-   email: string;
-   phoneNumber: string;
-   department: string;
-   additionalInfo: string;
- }
+interface FormTypes {
+  patientName: string;
+  email: string;
+  phoneNumber: string;
+  department: string;
+  additionalInfo: string;
+  userId?: string; // Optional or required depending on your use case
+}
 const FormAppointment = () => {
+  const { userData } = useAuth();
+  console.log(userData)
+  const userId  = userData?.userId;
   const FormSchema: ZodType<FormTypes> = z.object({
     patientName: z.string().min(1, "Please enter your name"),
     email: z
@@ -37,7 +42,8 @@ const FormAppointment = () => {
 
   const handleBook = async (formData: FormTypes) => {
     try {
-      const res = await axios.post("/api/appointement", formData);
+      const dataToSend = { ...formData, userId }; // Include userId in the payload
+      const res = await axios.post("/api/appointement", dataToSend);
       toast.success(res.data.message);
       reset();
     } catch (error) {

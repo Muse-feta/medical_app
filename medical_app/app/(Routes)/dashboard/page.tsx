@@ -1,10 +1,15 @@
+import Breadcumb from '@/components/Breadcumb'
+import UserAppointement from '@/components/UserAppointement'
 import React from 'react'
 
 type Props = {}
 
 const page = (props: Props) => {
   return (
-    <div>page</div>
+    <div>
+      <Breadcumb title="Appointments" subtitle="Appointments"/>
+      <UserAppointement/>
+    </div>
   )
 }
 

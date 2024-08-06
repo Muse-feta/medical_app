@@ -42,9 +42,9 @@ const Login: React.FC = () => {
         toast.error(res.message);
       }
      
-    } catch (error) {
+    } catch (error: any) {
       console.log("Error", error);
-      toast.error("Something went wrong");
+      toast.error(error.message);
     }
   };
 
