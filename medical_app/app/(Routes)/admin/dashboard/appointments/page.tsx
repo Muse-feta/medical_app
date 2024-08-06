@@ -22,7 +22,7 @@ type Payment = {
   order: number;
   name: string;
   phone: string;
-  status: "pending" | "processing" | "success" | "failed";
+  status: "PENDING" | "ACCEPTED" | "REJECTED";
   date: string;
 };
 
@@ -31,80 +31,80 @@ export const data: Payment[] = [
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
   {
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
   {
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
   {
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
   {
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
   {
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
   {
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
   {
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
   {
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
   {
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
   {
     order: 3,
     name: "Muse",
     phone: "fetamuse@gmail.com",
-    status: "pending",
+    status: "PENDING",
     date: "02/14/2024",
   },
- 
+
   // ...
 ];
 

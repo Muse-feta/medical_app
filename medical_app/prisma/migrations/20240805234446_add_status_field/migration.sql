@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `appointment` ADD COLUMN `status` ENUM('PENDING', 'ACCEPTED', 'REJECTED') NOT NULL DEFAULT 'PENDING';

@@ -46,7 +46,7 @@ const SignUpForm: React.FC = () => {
       path: ["confirmPassword"],
     });
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({resolver: zodResolver(schema)})
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<FormValues>({resolver: zodResolver(schema)})
 
 
 
@@ -57,6 +57,7 @@ const SignUpForm: React.FC = () => {
       console.log(res);
       if (res.status === 201) {
         toast.success(res.message);
+        reset();
       
          router.push("/verification");
       } else {

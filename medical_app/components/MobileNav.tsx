@@ -7,10 +7,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { AlignCenter } from 'lucide-react';
+import { AlignCenter, CircleUser } from 'lucide-react';
 import { useAuth } from '@/context/authContext';
 import axios from 'axios';
 import { toast, Toaster } from 'sonner';
+import Link from 'next/link';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 
 
@@ -43,20 +49,20 @@ const MobileNav = (props: Props) => {
           <nav className="mt-20">
             <ul className=" list-none gap-5 text-black">
               <li className="">
-                <a href="home-medical-clinic.html">Home</a>
+                <Link href="home-medical-clinic.html">Home</Link>
               </li>
               <li className="mt-2">
-                <a href="/about">About Us</a>
+                <Link href="/about">About Us</Link>
               </li>
               <li className="mt-2">
-                <a href="/appointement">Appointement</a>
+                <Link href="/appointement">Appointement</Link>
               </li>
               <li className="mt-2">
-                <a href="/contact">Contact</a>
+                <Link href="/contact">Contact</Link>
               </li>
               {isAdmin && (
                 <li>
-                  <a href="/admin/dashboard">Admin</a>
+                  <Link href="/admin/dashboard">Admin</Link>
                 </li>
               )}
               <li>
@@ -65,8 +71,20 @@ const MobileNav = (props: Props) => {
                     Logout
                   </a>
                 ) : (
-                  <a href="/login">Login</a>
+                  <Link href="/login">Login</Link>
                 )}
+              </li>
+              <li className="">
+                <Popover>
+                  <PopoverTrigger>
+                    <CircleUser className="w-8 h-8" />
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    {isLogedIn && <p> Wellcome: {userData?.firstName}</p>}
+                    <p> Email: {userData?.email}</p>
+                    <Link href="/dashboard">View Appointments</Link>
+                  </PopoverContent>
+                </Popover>
               </li>
             </ul>
           </nav>

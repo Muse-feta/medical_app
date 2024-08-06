@@ -24,7 +24,7 @@ const Login: React.FC = () => {
     password: z.string().min(8, { message: "Password must be at least 8 characters" }),
   })
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({resolver: zodResolver(schema)})
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<FormValues>({resolver: zodResolver(schema)})
   const router = useRouter();
 
 
@@ -35,6 +35,7 @@ const Login: React.FC = () => {
       console.log(res);
       if (res.status === 200) {
         toast.success(res.message);
+        reset();
         // redirect to homepage
         window.location.href = "/";
       } else {

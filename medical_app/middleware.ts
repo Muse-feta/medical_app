@@ -17,6 +17,7 @@ export function middleware(request: NextRequest) {
 
   const protectedRoutes = [
     "/appointement",
+    "/dashboard",
     "/admin/dashboard",
     "/admin/dashboard/users",
     "/admin/dashboard/appointments",
@@ -45,5 +46,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/appointement", "/admin/:path*"],
+  matcher: ["/appointement","/dashboard", "/admin/:path*"],
 };
