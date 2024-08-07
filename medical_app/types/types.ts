@@ -19,8 +19,8 @@ export type CardProps = {
 
 // used for recent appointements prop type
 export type RecentProps = {
-  name: string;
+  patientName: string;
   email: string;
-  date: string;
+  phoneNumber: string;
 };
 

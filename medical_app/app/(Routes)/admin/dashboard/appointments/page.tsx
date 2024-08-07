@@ -3,11 +3,31 @@ import DashboardTitle from "@/components/ui/dashboardTitle";
 import { DataTable } from "@/components/ui/DataTable";
 import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useAuth } from "@/context/authContext";
 
 type Props = {};
 
 const DashboardOrders = (props: Props) => {
+    const { userData } = useAuth();
+  
+    const [data, setData] = React.useState<Payment[]>([]);
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+         
+            const res = await axios.get(`/api/appointement`);
+            console.log("res", res.data.data);
+
+            setData(res.data.data);
+          
+        } catch (error) {
+          console.log("Error", error);
+        }
+      };
+      fetchData();
+    }, []);
   return (
     <div className="flex flex-col gap-5 w-full">
       <DashboardTitle title="Appointments" />
@@ -19,106 +39,27 @@ const DashboardOrders = (props: Props) => {
 export default DashboardOrders;
 
 type Payment = {
-  order: number;
-  name: string;
-  phone: string;
+  id: number;
+  patientName: string;
+
+  phoneNumber: string;
   status: "PENDING" | "ACCEPTED" | "REJECTED";
-  date: string;
+  email: string;
 };
 
-export const data: Payment[] = [
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
-  {
-    order: 3,
-    name: "Muse",
-    phone: "fetamuse@gmail.com",
-    status: "PENDING",
-    date: "02/14/2024",
-  },
 
-  // ...
-];
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    accessorKey: "order",
-    header: "Order",
+    accessorKey: "id",
+    header: "Order Id",
   },
   {
-    accessorKey: "name",
+    accessorKey: "patientName",
     header: "Name",
   },
   {
-    accessorKey: "phone",
+    accessorKey: "phoneNumber",
     header: "Phone",
   },
   {
@@ -126,19 +67,20 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Status",
     cell: ({ row }) => {
       return (
-       <div className={cn('font-medium w-fit px-4 py-2 rounded-lg',
-       { "bg-red-200": row.getValue("status") === "pending",
-        "bg-orange-200": row.getValue("status") === "pending",
-        "bg-green-200": row.getValue("status") === "completed",
-      }
-       )}>
-        {row.getValue("status")}
-       </div>
+        <div
+          className={cn("font-medium w-fit px-4 py-2 rounded-lg", {
+            "bg-red-200": row.getValue("status") === "pending",
+            "bg-orange-200": row.getValue("status") === "pending",
+            "bg-green-200": row.getValue("status") === "completed",
+          })}
+        >
+          {row.getValue("status")}
+        </div>
       );
     },
   },
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: "email",
+    header: "Email",
   },
 ];

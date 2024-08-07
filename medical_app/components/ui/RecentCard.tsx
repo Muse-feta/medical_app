@@ -11,18 +11,18 @@ const RecentCard = (props: RecentProps) => {
           <img
             width={200}
             height={200}
-            src={`https://api.dicebear.com/9.x/miniavs/svg?seed=${props.name}`}
+            src={`https://api.dicebear.com/9.x/miniavs/svg?seed=${props.patientName}`}
             alt="avater"
           />
         </div>
         <div className="text-sm">
-          <p>{props.name}</p>
+          <p>{props.patientName}</p>
           <div className=" text-ellipsis overflow-hidden whitespace-nowrap w-[120px] sm:w-auto text-gray-400">
             {props.email}
           </div>
         </div>
       </section>
-        <p>{props.date}</p>
+      <p>{props.phoneNumber}</p>
     </div>
   );
 }

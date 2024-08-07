@@ -2,11 +2,32 @@
 import DashboardTitle from '@/components/ui/dashboardTitle';
 import { DataTable } from '@/components/ui/DataTable';
 import { ColumnDef } from '@tanstack/react-table';
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect } from 'react'
 
 type Props = {}
+type Payment = {
+  firstname: string;
+  email: string;
+  phone: string;
+  role: string;
+};
 
 const DashboardUsers = (props: Props) => {
+  const [data, setData] = React.useState<Payment[]>([]);
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const res = await axios.get(`/api/users`);
+          console.log("res", res.data.data);
+
+          setData(res.data.data);
+        } catch (error) {
+          console.log("Error", error);
+        }
+      };
+      fetchData();
+    }, []);
   return (
     <div className="flex flex-col gap-5 w-full">
       <DashboardTitle title="Users" />
@@ -17,116 +38,24 @@ const DashboardUsers = (props: Props) => {
 
 export default DashboardUsers
 
-type Payment = {
-  name: string;
-  email: string;
-  status: "pending" | "processing" | "success" | "failed";
-  role: string;
-};
 
-export const data: Payment[] = [
-  {
-    name: "Muse",
-    email: "fetamuse@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  {
-    name: "Feta",
-    email: "feta@gmail.com",
-    status: "pending",
-    role: "admin",
-  },
-  // ...
-];
+
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "firstname",
     header: "Name",
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-2">
           <img
-            className="w-4 h-4 rounded-full"
+            className="w-8 h-8 rounded-full"
             src={`https://api.dicebear.com/9.x/lorelei/svg?seed=${row.getValue(
-              "name"
+              "firstname"
             )}`}
             alt="avater"
           />
-          <span>{row.getValue("name")}</span>
+          <span>{row.getValue("firstname")}</span>
         </div>
       );
     },
@@ -136,8 +65,8 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Email",
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "phone",
+    header: "Phone",
   },
   {
     accessorKey: "role",

@@ -8,11 +8,12 @@ import React, { useEffect } from "react";
 import { useAuth } from "@/context/authContext";
 
 type Payment = {
-  order: number;
-  name: string;
-  phone: string;
+  id: number;
+  patientName: string;
+
+  phoneNumber: string;
   status: "PENDING" | "ACCEPTED" | "REJECTED";
-  date: string;
+  email: string;
 };
 
 type Props = {};
@@ -25,17 +26,19 @@ const UserAppointement =  (props: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-           const res = await axios.get(`/api/appointement/${userId}`);
-          console.log("res", res.data.data);
+          if(userId) {
+             const res = await axios.get(`/api/appointement/${userId}`);
+             console.log("res", res.data.data);
 
-          setData(res.data.data);
+             setData(res.data.data);
+          }
 
       } catch (error) {
         console.log("Error", error);
       }
     }
     fetchData()
-  },[userId])
+  },[userId]);
   return (
     <div className="flex flex-col gap-5 w-full m-3 mr-0">
       <div className="overflow-x-auto sm:overflow-x-auto md:overflow-auto max-w-full max-h-96">
@@ -52,15 +55,15 @@ export default UserAppointement;
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    accessorKey: "orderId",
+    accessorKey: "id",
     header: "Order Id",
   },
   {
-    accessorKey: "name",
+    accessorKey: "patientName",
     header: "Name",
   },
   {
-    accessorKey: "phone",
+    accessorKey: "phoneNumber",
     header: "Phone",
   },
   {
@@ -81,7 +84,8 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: "email",
+    header: "Email",
   },
 ];
+

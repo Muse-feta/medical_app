@@ -1,69 +1,97 @@
+"use client"
 import Card from '@/components/Card';
 import CardContainer from '@/components/CardContainer';
 import BarChart from '@/components/ui/BarChart';
 import DashboardTitle from '@/components/ui/dashboardTitle'
 import RecentCard from '@/components/ui/RecentCard';
 import { CardProps, RecentProps } from '@/types/types';
-import { DollarSign } from 'lucide-react';
-import React from 'react'
+import axios from 'axios';
+import { AppWindow, DollarSign, MonitorDot, Users } from 'lucide-react';
+import React, { useEffect } from 'react'
 
 type Props = {}
-const cardData: CardProps[] = [
-  {
-    label: "Total Revenue",
-    description: "+20.1% from last month",
-    icon: DollarSign,
-    amount: "$ 4398.00",
-  },
-  {
-    label: "Total Revenue",
-    description: "+20.1% from last month",
-    icon: DollarSign,
-    amount: "$ 4398.00",
-  },
-  {
-    label: "Total Revenue",
-    description: "+20.1% from last month",
-    icon: DollarSign,
-    amount: "$ 4398.00",
-  },
-  {
-    label: "Total Revenue",
-    description: "+20.1% from last month",
-    icon: DollarSign,
-    amount: "$ 4398.00",
-  },
-];
+//   {
+//     label: "Total Revenue",
+//     description: "+20.1% from last month",
+//     icon: DollarSign,
+//     amount: "$ 4398.00",
+//   },
+//   {
+//     label: "Total Revenue",
+//     description: "+20.1% from last month",
+//     icon: DollarSign,
+//     amount: "$ 4398.00",
+//   },
+//   {
+//     label: "Total Revenue",
+//     description: "+20.1% from last month",
+//     icon: DollarSign,
+//     amount: "$ 4398.00",
+//   },
+//   {
+//     label: "Total Revenue",
+//     description: "+20.1% from last month",
+//     icon: DollarSign,
+//     amount: "$ 4398.00",
+//   },
+// ];
 
-const AppointementsData: RecentProps[] = [
-  {
-    name: "Muse",
-    email: "H0qg6@example.com",
-    date: "10/10/2024",
-  },
-  {
-    name: "Feta",
-    email: "H0qg6@example.com",
-    date: "10/10/2024",
-  },
-  {
-    name: "Tsige",
-    email: "H0qg6@example.com",
-    date: "10/10/2024",
-  },
-  {
-    name: "Eden",
-    email: "H0qg6@example.com",
-    date: "10/10/2024",
-  },
-  {
-    name: "Enku",
-    email: "H0qg6@example.com",
-    date: "10/10/2024",
-  },
-]
+
 
 const Dashboard = (props: Props) => {
+   const [cardData, setCardData] = React.useState<CardProps[]>([]);
+   const [recentData, setRecentData] = React.useState<RecentProps[]>([]);
+   useEffect(() => {
+     const fetchData = async () => {
+       try {
+         const res = await axios.get(`/api/card-info`);
+        //  console.log("res", res.data);
+
+           setCardData([
+             {
+               label: "Total Users",
+               description: "Total number of users",
+               icon: Users,
+               amount: `${res.data.totalUsers}`,
+             },
+             {
+               label: "New Users",
+               description: "New users added in the last month",
+               icon: Users,
+               amount: `${res.data.newUsersLast30Days}`,
+             },
+             {
+               label: "Appointments",
+               description: "Total number of appointments",
+               icon: AppWindow,
+               amount: `${res.data.totalAppointments}`,
+             },
+             {
+               label: "Active Appointments",
+               description: "Total number of active appointments",
+               icon: MonitorDot,
+               amount: `${res.data.totalUsers}`,
+             },
+             // You can add other cards here if needed
+           ]);
+       } catch (error) {
+         console.log("Error", error);
+       }
+     };
+
+     // fetch recent data
+     const fetchRecentData = async () => {
+       try {
+        const res = await axios.get(`/api/appointement/recent-appointement`);
+        // console.log("res", res.data.data);
+        setRecentData(res.data.data);
+       } catch (error: any) {
+        console.log("Error", error);
+       }
+     }
+     fetchData();
+     fetchRecentData();
+   }, []);
   return (
     <div className="flex flex-col gap-5 w-full">
       <DashboardTitle title="Dashboard" />
@@ -89,10 +117,10 @@ const Dashboard = (props: Props) => {
           <section>
             <p>Recent Appointements</p>
             <p className="text-sm text-gray-400">
-              You have 12 Appointements in ths month
+              You have {recentData.length} Appointements in this Day
             </p>
           </section>
-          {AppointementsData.map((data, index) => (
+          {recentData.map((data, index) => (
             <RecentCard key={index} {...data} />
           ))}
         </CardContainer>
