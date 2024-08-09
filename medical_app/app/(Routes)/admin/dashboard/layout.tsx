@@ -9,19 +9,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <div
-      className={cn("min-h-screen w-full bg-white text-black flex", {
-        "debug-screens": process.env.NODE_ENV === "development",
-      })}
+      className={cn("min-h-screen w-full bg-white text-black flex")}
     >
         {/* sidebar */}
         <Sidebar/>
         {/* mainpage */}
-      <div className="p-8 w-full">{children}</div>
+      <div className="p-8 w-full">
+        {modal}
+        {children}
+        </div>
     </div>
   );
 }

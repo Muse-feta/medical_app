@@ -105,24 +105,26 @@ const Dashboard = (props: Props) => {
       {/* graph section */}
       <section className="grid grid-cols-1 gap-4 transition-all lg:grid-cols-2">
         <CardContainer>
-          <p className="md:p-2 font-semibold">Overview</p>
-          <div className="overflow-x-auto">
+          <p className="md:p-1 font-semibold">Overview</p>
+          <div className="overflow-x-auto scrollbar-hidden">
             <div className="min-w-[600px]">
               <BarChart />
             </div>
           </div>
         </CardContainer>
 
-        <CardContainer className='flex justify-between gap-4'>
+        <CardContainer className="flex justify-between gap-4">
           <section>
             <p>Recent Appointements</p>
             <p className="text-sm text-gray-400">
               You have {recentData.length} Appointements in this Day
             </p>
           </section>
-          {recentData.map((data, index) => (
-            <RecentCard key={index} {...data} />
-          ))}
+          <div className="h-80 overflow-y-auto scrollbar-hidden">
+            {recentData.map((data, index) => (
+              <RecentCard key={index} {...data} />
+            ))}
+          </div>
         </CardContainer>
       </section>
     </div>

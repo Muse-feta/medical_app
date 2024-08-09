@@ -29,15 +29,11 @@ const BarChart = () => {
           throw new Error("Invalid data format");
         }
 
-        // Log the raw data to check the response
-        console.log("Fetched appointments:", appointments);
-
-        // Process appointments data to group by month and count appointments
         const groupedData: { [key: string]: number } = {};
 
         appointments.forEach((appointment: any) => {
           const date = new Date(appointment.createdAt);
-          const month = `${date.getFullYear()}-${date.getMonth() + 1}`; // Format as "YYYY-MM"
+          const month = `${date.getFullYear()}-${date.getMonth() + 1}`;
 
           if (!groupedData[month]) {
             groupedData[month] = 0;
@@ -45,10 +41,6 @@ const BarChart = () => {
           groupedData[month]++;
         });
 
-        // Log the grouped data
-        console.log("Grouped data:", groupedData);
-
-        // Define months for the year 2024
         const months = [
           "2024-1",
           "2024-2",
@@ -64,19 +56,14 @@ const BarChart = () => {
           "2024-12",
         ];
 
-        // Get the current month in "YYYY-MM" format
         const currentMonth = `${new Date().getFullYear()}-${
           new Date().getMonth() + 1
         }`;
 
-        // Convert grouped data into the format required by Recharts
         const formattedData = months.map((month) => ({
           name: month,
-          total: month <= currentMonth ? groupedData[month] || 0 : 0, // Show data for past and current months, zero for future months
+          total: month <= currentMonth ? groupedData[month] || 0 : 0,
         }));
-
-        // Log the formatted data
-        console.log("Formatted data:", formattedData);
 
         setData(formattedData);
       } catch (error) {
@@ -99,7 +86,7 @@ const BarChart = () => {
   }
 
   return (
-    <ResponsiveContainer width={"100%"} height={350}>
+    <ResponsiveContainer width="100%" height={350}>
       <BarGraph data={data}>
         <XAxis
           dataKey="name"
@@ -116,7 +103,12 @@ const BarChart = () => {
           fontSize={12}
           tickFormatter={(value) => `${value}`}
         />
-        <Bar dataKey="total" radius={[4, 4, 0, 0]} fill="#8884d8" />
+        <Bar
+          dataKey="total"
+          radius={[4, 4, 0, 0]}
+          fill="#8884d8"
+          barSize={20}
+        />
       </BarGraph>
     </ResponsiveContainer>
   );

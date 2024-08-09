@@ -11,7 +11,7 @@ const RecentCard = (props: RecentProps) => {
           <img
             width={200}
             height={200}
-            src={`https://api.dicebear.com/9.x/miniavs/svg?seed=${props.patientName}`}
+            src={`https://api.dicebear.com/9.x/lorelei/svg?seed=${props.patientName}`}
             alt="avater"
           />
         </div>

@@ -1,4 +1,5 @@
 "use client";
+
 import DashboardTitle from "@/components/ui/dashboardTitle";
 import { DataTable } from "@/components/ui/DataTable";
 import { cn } from "@/lib/utils";
@@ -6,32 +7,37 @@ import { ColumnDef } from "@tanstack/react-table";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useAuth } from "@/context/authContext";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 const DashboardOrders = (props: Props) => {
-    const { userData } = useAuth();
-  
-    const [data, setData] = React.useState<Payment[]>([]);
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-         
-            const res = await axios.get(`/api/appointement`);
-            console.log("res", res.data.data);
+  const { userData } = useAuth();
+  const router = useRouter();
 
-            setData(res.data.data);
-          
-        } catch (error) {
-          console.log("Error", error);
-        }
-      };
-      fetchData();
-    }, []);
+  const [data, setData] = React.useState<Payment[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`/api/appointement`);
+        console.log("res", res.data.data);
+        setData(res.data.data);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleRowClick = (rowData: Payment) => {
+    router.push(`/admin/dashboard/appointments/${rowData.id}`);
+  };
+
   return (
     <div className="flex flex-col gap-5 w-full">
       <DashboardTitle title="Appointments" />
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={data} onRowClick={handleRowClick} />
     </div>
   );
 };
@@ -41,46 +47,45 @@ export default DashboardOrders;
 type Payment = {
   id: number;
   patientName: string;
-
   phoneNumber: string;
   status: "PENDING" | "ACCEPTED" | "REJECTED";
   email: string;
 };
 
-
-
 export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "id",
     header: "Order Id",
+    cell: ({ row }) => row.getValue("id"),
   },
   {
     accessorKey: "patientName",
     header: "Name",
+    cell: ({ row }) => row.getValue("patientName"),
   },
   {
     accessorKey: "phoneNumber",
     header: "Phone",
+    cell: ({ row }) => row.getValue("phoneNumber"),
   },
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row }) => {
-      return (
-        <div
-          className={cn("font-medium w-fit px-4 py-2 rounded-lg", {
-            "bg-red-200": row.getValue("status") === "pending",
-            "bg-orange-200": row.getValue("status") === "pending",
-            "bg-green-200": row.getValue("status") === "completed",
-          })}
-        >
-          {row.getValue("status")}
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <div
+        className={cn("font-medium w-fit px-4 py-2 rounded-lg", {
+          "bg-red-200": row.getValue("status") === "PENDING",
+          "bg-orange-200": row.getValue("status") === "REJECTED",
+          "bg-green-200": row.getValue("status") === "ACCEPTED",
+        })}
+      >
+        {row.getValue("status")}
+      </div>
+    ),
   },
   {
     accessorKey: "email",
     header: "Email",
+    cell: ({ row }) => row.getValue("email"),
   },
 ];
