@@ -3,6 +3,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast, Toaster } from "sonner";
+import axios from "axios";
 
 type Params = { id: string };
 
@@ -34,12 +36,39 @@ const page = ({ params }: { params: Params }) => {
         const formattedDate = new Date(data.date);
 
         // Now you can use `formattedDate` when saving to the database
-        console.log({
+        // console.log({
+        //   date: formattedDate,
+        //   doctorName: data.doctorName,
+        //   additionalInfo: data.additionalInfo,
+        // });
+
+        const submitData = {
           date: formattedDate,
           doctorName: data.doctorName,
           additionalInfo: data.additionalInfo,
-        });
+        };
+
+        try {
+          const res = axios.post(`/api/appointement/schedule-appointement/${appointementId}`, {
+            ...submitData,})
+            reset();
+        } catch (error: any) {
+          console.log(error.message);
+        }
       };
+
+     const handleReject = async () => {
+       try {
+         const response = await axios.get(
+           `/api/appointement/schedule-appointement/reject/${appointementId}`
+         );
+         console.log(response.data); // Process the response as needed
+         // You can also add any success handling here, e.g., showing a success message to the user
+       } catch (error: any) {
+         console.error("Error rejecting appointment:", error);
+         // Add any user feedback for errors here, e.g., displaying a message to the user
+       }
+     };
   return (
     <div>
       <div className="max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
@@ -57,6 +86,11 @@ const page = ({ params }: { params: Params }) => {
               {...register("date")}
               className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
+            {errors.date && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.date.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col">
             <label
@@ -78,6 +112,11 @@ const page = ({ params }: { params: Params }) => {
               <option value="Dr. Almaz">Dr. Almaz</option>
               <option value="Dr. Chala">Dr. Chala</option>
             </select>
+            {errors.doctorName && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.doctorName.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col">
             <label
@@ -95,13 +134,26 @@ const page = ({ params }: { params: Params }) => {
             />
           </div>
           <button
+            disabled={isSubmitting}
             type="submit"
             className="w-full py-2 px-4 bg-[#2bb77d] text-white font-semibold rounded-lg shadow-md hover:bg-[#21a870] focus:outline-none focus:ring-2 focus:ring-green-500"
           >
-            Confirm
+            {isSubmitting ? "Submitting..." : "Confirm"}
+          </button>
+          <p className="flex justify-center items-center">
+            If you reject the appointment
+          </p>
+          <button
+            onClick={handleReject}
+            // disabled={isSubmitting}
+            // type="submit"
+            className="w-full py-2 px-4 bg-[#b72b2b] text-white font-semibold rounded-lg shadow-md hover:bg-[#a90b0b] focus:outline-none focus:ring-2 focus:ring-red-500"
+          >
+            Reject
           </button>
         </form>
       </div>
+      <Toaster position="top-left" richColors />
     </div>
   );
 };

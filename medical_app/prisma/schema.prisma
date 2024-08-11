@@ -47,6 +47,7 @@ model Appointment {
   phoneNumber     String
   department      String
   additionalInfo  String
+  status          status            @default(PENDING)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   appointmentInfo AppointmentInfo?
@@ -55,7 +56,6 @@ model Appointment {
 model AppointmentInfo {
   id              Int              @id @default(autoincrement())
   appointmentId   Int              @unique
-  status          status            @default(PENDING)
   date            DateTime 
   additionalInfo  String  
   doctorName      String  

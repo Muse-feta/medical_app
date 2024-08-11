@@ -12,11 +12,12 @@ import {
 } from "@/components/ui/tooltip";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { usePathname } from "next/navigation";
+import React from "react";
 
 interface NavProps {
   isCollapsed: boolean;
   links: {
-    title: string;
+    title: string | React.ReactNode;
     label?: string;
     icon: LucideIcon;
     variant: "default" | "ghost";

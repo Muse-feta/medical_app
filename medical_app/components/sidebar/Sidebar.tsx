@@ -8,7 +8,7 @@ import {
 } from "@react-hook/window-size";
 
 import { Button } from '../ui/button';
-import { AppWindow, ChevronRight, LayoutDashboard, Users } from 'lucide-react';
+import { AppWindow, CalendarCheck, CalendarOff, ChevronRight, LayoutDashboard, MonitorDot, Users } from 'lucide-react';
 
 type Props = {}
 
@@ -26,7 +26,7 @@ const Sidebar = (props: Props) => {
         className="absolute top-0 right-[-20px] rounded-full my-3"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
-        {!mobileWidth &&(
+        {!mobileWidth && (
           <Button variant={"outline"} className="px-2 rounded-full">
             <ChevronRight />
           </Button>
@@ -50,10 +50,30 @@ const Sidebar = (props: Props) => {
             variant: "ghost",
           },
           {
-            title: "Appointments",
+            title: (
+              <div className="whitespace-normal max-w-[80px] ">Active</div>
+            ),
+            label: "",
+            href: "/admin/dashboard/appointments/active",
+            icon: MonitorDot,
+            variant: "ghost",
+          },
+          {
+            title: (
+              <div className="whitespace-normal max-w-[80px] ">Scheduled</div>
+            ),
+            label: "",
+            href: "/admin/dashboard/appointments/scheduled",
+            icon: CalendarCheck,
+            variant: "ghost",
+          },
+          {
+            title: (
+              <div className="whitespace-normal max-w-[80px] ">Rejected</div>
+            ),
             label: "",
             href: "/admin/dashboard/appointments",
-            icon: AppWindow,
+            icon: CalendarOff,
             variant: "ghost",
           },
         ]}

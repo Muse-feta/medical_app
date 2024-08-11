@@ -9,6 +9,16 @@ import React, { useEffect } from "react";
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+
 type Props = {};
 
 const DashboardOrders = (props: Props) => {
@@ -36,7 +46,6 @@ const DashboardOrders = (props: Props) => {
 
   return (
     <div className="flex flex-col gap-5 w-full">
-      <DashboardTitle title="Appointments" />
       <DataTable columns={columns} data={data} onRowClick={handleRowClick} />
     </div>
   );
