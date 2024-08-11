@@ -72,7 +72,7 @@ const Sidebar = (props: Props) => {
               <div className="whitespace-normal max-w-[80px] ">Rejected</div>
             ),
             label: "",
-            href: "/admin/dashboard/appointments",
+            href: "/admin/dashboard/appointments/rejected",
             icon: CalendarOff,
             variant: "ghost",
           },

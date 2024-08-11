@@ -18,7 +18,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-
 type Props = {};
 
 const DashboardOrders = (props: Props) => {
@@ -30,7 +29,7 @@ const DashboardOrders = (props: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/api/appointement`);
+        const res = await axios.get(`/api/appointement/reject`);
         console.log("res", res.data.data);
         setData(res.data.data);
       } catch (error) {
@@ -41,7 +40,7 @@ const DashboardOrders = (props: Props) => {
   }, []);
 
   const handleRowClick = (rowData: Payment) => {
-    router.push(`/admin/dashboard/appointments/active/${rowData.id}`);
+    router.push(`/admin/dashboard/appointments/rejected/${rowData.id}`);
   };
 
   return (

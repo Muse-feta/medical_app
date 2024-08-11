@@ -56,7 +56,7 @@ model Appointment {
 model AppointmentInfo {
   id              Int              @id @default(autoincrement())
   appointmentId   Int              @unique
-  date            DateTime 
+  date            DateTime? 
   additionalInfo  String  
   doctorName      String  
   appointment     Appointment     @relation(fields: [appointmentId], references: [id])

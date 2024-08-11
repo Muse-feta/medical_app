@@ -18,7 +18,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-
 type Props = {};
 
 const DashboardOrders = (props: Props) => {
@@ -30,7 +29,7 @@ const DashboardOrders = (props: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/api/appointement`);
+        const res = await axios.get(`/api/appointement/scheduled`);
         console.log("res", res.data.data);
         setData(res.data.data);
       } catch (error) {
@@ -41,7 +40,7 @@ const DashboardOrders = (props: Props) => {
   }, []);
 
   const handleRowClick = (rowData: Payment) => {
-    router.push(`/admin/dashboard/appointments/active/${rowData.id}`);
+    router.push(`/admin/dashboard/appointments/scheduled/${rowData.id}`);
   };
 
   return (
@@ -59,6 +58,13 @@ type Payment = {
   phoneNumber: string;
   status: "PENDING" | "ACCEPTED" | "REJECTED";
   email: string;
+  info: {
+    id: number;
+    appointmentId: number;
+    date: string;
+    additionalInfo: string;
+    doctorName: string;
+  }[];
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -96,5 +102,15 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "email",
     header: "Email",
     cell: ({ row }) => row.getValue("email"),
+  },
+  {
+    accessorKey: "info",
+    header: "Date",
+    cell: ({ row }) => {
+      const info = row.getValue("info") as { date: string }[];
+      return info.map((entry) => (
+        <div key={entry.date}>{new Date(entry.date).toLocaleDateString()}</div>
+      ));
+    },
   },
 ];

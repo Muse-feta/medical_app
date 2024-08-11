@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, status } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -29,7 +29,14 @@ export const POST = async (req: NextRequest) => {
 
 export const GET = async (req: NextRequest) => {
   try {
-    const appointments = await prisma.appointment.findMany();
+     const appointments = await prisma.appointment.findMany({
+       where: {
+         status: "PENDING",
+       },
+       orderBy: {
+         id: "desc",
+       }
+     });
     return NextResponse.json({ success: true, status: 200, data: appointments });
   } catch (error: any) {
     console.error(error); // Log the error for debugging

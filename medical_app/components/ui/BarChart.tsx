@@ -22,7 +22,7 @@ const BarChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/appointement");
+        const response = await axios.get("/api/appointement/all");
         const appointments = response.data.data;
 
         if (!appointments || !Array.isArray(appointments)) {

@@ -5,6 +5,7 @@ import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast, Toaster } from "sonner";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type Params = { id: string };
 
@@ -16,6 +17,7 @@ interface FormData {
 
 const page = ({ params }: { params: Params }) => {
 
+  const router = useRouter();
   const appointementId = params.id;
 
     const schema: ZodType<FormData> = z.object({
@@ -52,22 +54,27 @@ const page = ({ params }: { params: Params }) => {
           const res = axios.post(`/api/appointement/schedule-appointement/${appointementId}`, {
             ...submitData,})
             reset();
+            toast.success("Appointment scheduled successfully");
+            router.push("/admin/dashboard/appointments/scheduled");
         } catch (error: any) {
           console.log(error.message);
         }
       };
 
      const handleReject = async () => {
-       try {
-         const response = await axios.get(
-           `/api/appointement/schedule-appointement/reject/${appointementId}`
-         );
-         console.log(response.data); // Process the response as needed
-         // You can also add any success handling here, e.g., showing a success message to the user
-       } catch (error: any) {
-         console.error("Error rejecting appointment:", error);
-         // Add any user feedback for errors here, e.g., displaying a message to the user
-       }
+        try {
+          const response = await axios.put(
+            `/api/appointement/change-status/${appointementId}`,
+            {
+              status: "REJECTED",
+            }
+          );
+          console.log(response.data);
+          toast.success("Appointment rejected successfully");
+          router.push("/admin/dashboard/appointments/rejected");
+        } catch (error: any) {
+          console.error("Error rejecting appointment:", error);
+        }
      };
   return (
     <div>
@@ -87,9 +94,7 @@ const page = ({ params }: { params: Params }) => {
               className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
             {errors.date && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.date.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
             )}
           </div>
           <div className="flex flex-col">
@@ -140,18 +145,18 @@ const page = ({ params }: { params: Params }) => {
           >
             {isSubmitting ? "Submitting..." : "Confirm"}
           </button>
-          <p className="flex justify-center items-center">
-            If you reject the appointment
-          </p>
-          <button
-            onClick={handleReject}
-            // disabled={isSubmitting}
-            // type="submit"
-            className="w-full py-2 px-4 bg-[#b72b2b] text-white font-semibold rounded-lg shadow-md hover:bg-[#a90b0b] focus:outline-none focus:ring-2 focus:ring-red-500"
-          >
-            Reject
-          </button>
         </form>
+        <p className="flex justify-center items-center mt-3">
+          If you want to reject the appointment
+        </p>
+        <button
+          onClick={handleReject}
+          // disabled={isSubmitting}
+          // type="submit"
+          className="w-full py-2 px-4 bg-[#b72b2b] text-white font-semibold rounded-lg shadow-md hover:bg-[#a90b0b] focus:outline-none focus:ring-2 focus:ring-red-500"
+        >
+          Reject
+        </button>
       </div>
       <Toaster position="top-left" richColors />
     </div>

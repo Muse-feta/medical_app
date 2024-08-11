@@ -10,10 +10,16 @@ import { useAuth } from "@/context/authContext";
 type Payment = {
   id: number;
   patientName: string;
-
   phoneNumber: string;
   status: "PENDING" | "ACCEPTED" | "REJECTED";
   email: string;
+  info: {
+    id: number;
+    appointmentId: number;
+    date: string;
+    additionalInfo: string;
+    doctorName: string;
+  }[];
 };
 
 type Props = {};
@@ -86,6 +92,20 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "email",
     header: "Email",
+  },
+  {
+    accessorKey: "info",
+    header: "Date",
+    cell: ({ row }) => {
+      const info = row.getValue("info") as { date: string }[] | undefined;
+
+      // Ensure info is defined and is an array before accessing length
+      return info && Array.isArray(info) && info.length > 0 ? (
+        <div>{new Date(info[0].date).toLocaleDateString()}</div>
+      ) : (
+        <div>No Date</div>
+      );
+    },
   },
 ];
 
