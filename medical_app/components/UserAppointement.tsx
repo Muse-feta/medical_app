@@ -100,10 +100,27 @@ export const columns: ColumnDef<Payment>[] = [
       const info = row.getValue("info") as { date: string }[] | undefined;
 
       // Ensure info is defined and is an array before accessing length
+      if (info && Array.isArray(info) && info.length > 0) {
+        return info.map((entry) => (
+          <div key={entry.date}>
+            {new Date(entry.date).toLocaleString()}{" "}
+            {/* This will show date and time */}
+          </div>
+        ));
+      }
+
+      return <div>No Date</div>; // Display "No Date" if info is empty or undefined
+    },
+  },
+  {
+    id: "doctorName",
+    header: "Doctor",
+    cell: ({ row }) => {
+      const info = row.getValue("info") as { doctorName: string }[] | undefined;
       return info && Array.isArray(info) && info.length > 0 ? (
-        <div>{new Date(info[0].date).toLocaleDateString()}</div>
+        <div>{info[0].doctorName}</div>
       ) : (
-        <div>No Date</div>
+        <div>No Doctor</div>
       );
     },
   },

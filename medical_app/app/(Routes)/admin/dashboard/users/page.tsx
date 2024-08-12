@@ -3,10 +3,12 @@ import DashboardTitle from '@/components/ui/dashboardTitle';
 import { DataTable } from '@/components/ui/DataTable';
 import { ColumnDef } from '@tanstack/react-table';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
 type Props = {}
 type Payment = {
+  id: number;
   firstname: string;
   email: string;
   phone: string;
@@ -15,6 +17,7 @@ type Payment = {
 
 const DashboardUsers = (props: Props) => {
   const [data, setData] = React.useState<Payment[]>([]);
+  const router = useRouter();
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -28,10 +31,14 @@ const DashboardUsers = (props: Props) => {
       };
       fetchData();
     }, []);
+
+      const handleRowClick = (rowData: Payment) => {
+        router.push(`/admin/dashboard/users/${rowData.id}`);
+      };
   return (
     <div className="flex flex-col gap-5 w-full">
       <DashboardTitle title="Users" />
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={data} onRowClick={handleRowClick} />
     </div>
   );
 }

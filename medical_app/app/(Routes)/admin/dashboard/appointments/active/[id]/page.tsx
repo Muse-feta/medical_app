@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast, Toaster } from "sonner";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+// import { utcToZonedTime, zonedTimeToUtc, format } from "date-fns-tz";
 
 type Params = { id: string };
 
@@ -34,28 +35,24 @@ const page = ({ params }: { params: Params }) => {
       } = useForm<FormData>({ resolver: zodResolver(schema) });
 
       const onSubmit = (data: FormData) => {
-        // Convert date string to Date object
-        const formattedDate = new Date(data.date);
-
-        // Now you can use `formattedDate` when saving to the database
-        // console.log({
-        //   date: formattedDate,
-        //   doctorName: data.doctorName,
-        //   additionalInfo: data.additionalInfo,
-        // });
+      
 
         const submitData = {
-          date: formattedDate,
+          date: data.date,
           doctorName: data.doctorName,
           additionalInfo: data.additionalInfo,
         };
 
         try {
-          const res = axios.post(`/api/appointement/schedule-appointement/${appointementId}`, {
-            ...submitData,})
-            reset();
-            toast.success("Appointment scheduled successfully");
-            router.push("/admin/dashboard/appointments/scheduled");
+          const res = axios.post(
+            `/api/appointement/schedule-appointement/${appointementId}`,
+            {
+              ...submitData,
+            }
+          );
+          reset();
+          toast.success("Appointment scheduled successfully");
+          router.push("/admin/dashboard/appointments/scheduled");
         } catch (error: any) {
           console.log(error.message);
         }
@@ -89,7 +86,7 @@ const page = ({ params }: { params: Params }) => {
               Date
             </label>
             <input
-              type="date"
+              type="datetime-local"
               {...register("date")}
               className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />

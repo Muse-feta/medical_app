@@ -1,3 +1,4 @@
+import { appointmentEmail } from "@/helpers/appointmentEmail";
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -26,13 +27,35 @@ export const POST = async (
           status: "ACCEPTED",
         },
       });
+
+      const appInfo = await prisma.appointment.findUnique({
+        where: {
+          id: Number(id),
+        },
+      });
+
+      // Check if email and patientName are defined before sending an email
+      const email = appInfo?.email;
+      const patientName = appInfo?.patientName;
+      const date = body.date;
+
+      if (email && patientName && date) {
+        // Send email to patient
+        await appointmentEmail(email, patientName, date);
+      } else {
+        console.error("Email or patient name is missing, email not sent.");
+      }
       return {
         appointment,
         appStatus,
       };
     })
 
+    
+
     return NextResponse.json({ success: true, status: 200, data: appointment });
+
+    
 
   } catch (error: any) {
     console.log(error);

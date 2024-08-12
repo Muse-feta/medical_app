@@ -103,14 +103,28 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Email",
     cell: ({ row }) => row.getValue("email"),
   },
+ {
+  accessorKey: "info",
+  header: "Date",
+  cell: ({ row }) => {
+    const info = row.getValue("info") as { date: string }[];
+    return info.map((entry) => (
+      <div key={entry.date}>
+        {new Date(entry.date).toLocaleString()} {/* This will show date and time */}
+      </div>
+    ));
+  },
+},
   {
     accessorKey: "info",
-    header: "Date",
+    header: "Doctor",
     cell: ({ row }) => {
-      const info = row.getValue("info") as { date: string }[];
-      return info.map((entry) => (
-        <div key={entry.date}>{new Date(entry.date).toLocaleDateString()}</div>
-      ));
+      const info = row.getValue("info") as { doctorName: string }[];
+      return info.length > 0 ? (
+        <div>{info[0].doctorName}</div>
+      ) : (
+        <div>No Doctor</div>
+      );
     },
   },
 ];
