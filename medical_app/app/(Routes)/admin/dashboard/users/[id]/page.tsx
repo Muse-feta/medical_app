@@ -28,7 +28,7 @@ const page = ({ params }: { params: Params }) => {
         <div className="max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
           <h2 className="text-xl font-semibold mb-4">Change Role</h2>
           <p className="flex justify-center items-center">
-            If you want to change the role of the user
+            If you want to change the role of the user 
           </p>
           <button
             onClick={handleStatus}
