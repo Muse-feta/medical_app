@@ -8,7 +8,7 @@ import { toast, Toaster } from "sonner";
 type Props = {};
 type Params = { id: string };
 
-const page = ({ params }: { params: Params }) => {
+const Page = ({ params }: { params: Params }) => {
   const router = useRouter();
   const userId = params.id;
 
@@ -22,13 +22,14 @@ const page = ({ params }: { params: Params }) => {
       console.error("Error accepting appointment:", error);
     }
   };
+
   return (
     <div>
       <div>
         <div className="max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
           <h2 className="text-xl font-semibold mb-4">Change Role</h2>
           <p className="flex justify-center items-center">
-            If you want to change the role of the user 
+            If you want to change the role of the user
           </p>
           <button
             onClick={handleStatus}
@@ -45,4 +46,4 @@ const page = ({ params }: { params: Params }) => {
   );
 };
 
-export default page;
+export default Page;

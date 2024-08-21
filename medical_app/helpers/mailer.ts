@@ -65,6 +65,8 @@ export const mailer = async ({email, emailType, userId}: any) => {
           },
         });
 
+        const baseUrl = process.env.BASE_URL;
+
         var mailOptions = {
           from: "Ethio Medical App",
           to: email,
@@ -73,8 +75,8 @@ export const mailer = async ({email, emailType, userId}: any) => {
           }`,
           html: `${
             emailType === "VERIFY"
-              ? `<a href="http://localhost:3000/verify?token=${hashedId}">Verify Email</a>`
-              : `<a href="http://localhost:3000/reset-password?token=${hashedId}">Reset Password</a>`
+              ? `<a href="${baseUrl}/verify?token=${hashedId}">Verify Email</a>`
+              : `<a href="${baseUrl}/reset-password?token=${hashedId}">Reset Password</a>`
           }`,
         };
 

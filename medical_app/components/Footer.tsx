@@ -1,4 +1,5 @@
-import React from 'react'
+import React from "react";
+import Image from "next/image";
 import "@/asset/css/app.min.css";
 import "@/asset/css/style.css";
 import "@/asset/css/fontawesome.min.css";
@@ -14,12 +15,17 @@ const Footer = () => {
                 <div className="th-widget-about">
                   <div className="about-logo">
                     <a href="home-medical-clinic.html">
-                      <img src="assets/img/logo-footer.svg" alt="Mediax" />
+                      <Image
+                        src="/assets/img/logo-footer.svg"
+                        alt="Mediax"
+                        width={150}
+                        height={50}
+                      />
                     </a>
                   </div>
                   <p className="about-text">
-                    Subscribe to out newsletter today to receive latest news
-                    administrate cost effective for tactical data.
+                    Subscribe to our newsletter today to receive the latest news
+                    and updates on cost-effective solutions for tactical data.
                   </p>
                   <p className="footer-info">
                     <i className="fal fa-location-dot"></i> 2478 Street City
@@ -72,7 +78,7 @@ const Footer = () => {
             </div>
             <div className="col-md-6 col-xl-auto">
               <div className="widget widget_nav_menu footer-widget">
-                <h3 className="widget_title">Popular service</h3>
+                <h3 className="widget_title">Popular Services</h3>
                 <div className="menu-all-pages-container">
                   <ul className="menu">
                     <li>
@@ -85,22 +91,21 @@ const Footer = () => {
                       <a href="service-details.html">Orthopedic Care</a>
                     </li>
                     <li>
-                      <a href="service-details.html">Diagnosis department</a>
+                      <a href="service-details.html">Diagnosis Department</a>
                     </li>
                     <li>
                       <a href="service-details.html">Gastroenterology</a>
                     </li>
                     <li>
-                      <a href="service-details.html">Therapy department</a>
+                      <a href="service-details.html">Therapy Department</a>
                     </li>
                     <li>
-                      <a href="service-details.html">Dental service</a>
+                      <a href="service-details.html">Dental Service</a>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
-           
           </div>
         </div>
       </div>
@@ -135,6 +140,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-}
+};
 
-export default Footer
+export default Footer;

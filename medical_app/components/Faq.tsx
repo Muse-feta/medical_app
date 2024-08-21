@@ -1,4 +1,5 @@
-import React from 'react'
+import React from "react";
+import Image from "next/image";
 import faq_bg from "@/asset/img/bg/faq_bg_1.jpg";
 import "@/asset/css/app.min.css";
 import "@/asset/css/style.css";
@@ -17,7 +18,12 @@ const Faq = () => {
             <div className="pe-xl-4 space-top pt-xl-0 pb-40 pb-xl-0">
               <div className="title-area text-center text-xl-start">
                 <span className="sub-title">
-                  <img src="assets/img/theme-img/title_icon_2.svg" alt="Icon" />
+                  <Image
+                    src="/assets/img/theme-img/title_icon_2.svg"
+                    alt="Icon"
+                    width={24}
+                    height={24}
+                  />
                   Faqs
                 </span>
                 <h2 className="sec-title text-white">
@@ -117,7 +123,12 @@ const Faq = () => {
           <div className="col-xl-6">
             <div className="ps-xxl-4">
               <div className="faq-img1">
-                <img src="assets/img/normal/faq_1.png" alt="faq" />
+                <Image
+                  src="/assets/img/normal/faq_1.png"
+                  alt="FAQ"
+                  width={600}
+                  height={400}
+                />
               </div>
             </div>
           </div>
@@ -125,6 +136,6 @@ const Faq = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Faq
+export default Faq;

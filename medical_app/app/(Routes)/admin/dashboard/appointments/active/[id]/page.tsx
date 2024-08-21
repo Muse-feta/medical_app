@@ -16,63 +16,57 @@ interface FormData {
   additionalInfo?: string;
 }
 
-const page = ({ params }: { params: Params }) => {
-
+const Page = ({ params }: { params: Params }) => {
   const router = useRouter();
   const appointementId = params.id;
 
-    const schema: ZodType<FormData> = z.object({
-      date: z.string().min(1, "Date is required"),
-      doctorName: z.string().min(1, "Doctor is required"),
-      additionalInfo: z.string().optional(),
-    });
+  const schema: ZodType<FormData> = z.object({
+    date: z.string().min(1, "Date is required"),
+    doctorName: z.string().min(1, "Doctor is required"),
+    additionalInfo: z.string().optional(),
+  });
 
-      const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting },
-        reset,
-      } = useForm<FormData>({ resolver: zodResolver(schema) });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-      const onSubmit = (data: FormData) => {
-      
+  const onSubmit = async (data: FormData) => {
+    const submitData = {
+      date: data.date,
+      doctorName: data.doctorName,
+      additionalInfo: data.additionalInfo,
+    };
 
-        const submitData = {
-          date: data.date,
-          doctorName: data.doctorName,
-          additionalInfo: data.additionalInfo,
-        };
+    try {
+      await axios.post(
+        `/api/appointement/schedule-appointement/${appointementId}`,
+        submitData
+      );
+      reset();
+      toast.success("Appointment scheduled successfully");
+      router.push("/admin/dashboard/appointments/scheduled");
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
-        try {
-          const res = axios.post(
-            `/api/appointement/schedule-appointement/${appointementId}`,
-            {
-              ...submitData,
-            }
-          );
-          reset();
-          toast.success("Appointment scheduled successfully");
-          router.push("/admin/dashboard/appointments/scheduled");
-        } catch (error: any) {
-          console.log(error.message);
-        }
-      };
+  const handleReject = async () => {
+    try {
+      const response = await axios.put(
+        `/api/appointement/change-status/${appointementId}`,
+        { status: "REJECTED" }
+      );
+      console.log(response.data);
+      toast.success("Appointment rejected successfully");
+      router.push("/admin/dashboard/appointments/rejected");
+    } catch (error: any) {
+      console.error("Error rejecting appointment:", error);
+    }
+  };
 
-     const handleReject = async () => {
-        try {
-          const response = await axios.put(
-            `/api/appointement/change-status/${appointementId}`,
-            {
-              status: "REJECTED",
-            }
-          );
-          console.log(response.data);
-          toast.success("Appointment rejected successfully");
-          router.push("/admin/dashboard/appointments/rejected");
-        } catch (error: any) {
-          console.error("Error rejecting appointment:", error);
-        }
-     };
   return (
     <div>
       <div className="max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
@@ -148,8 +142,6 @@ const page = ({ params }: { params: Params }) => {
         </p>
         <button
           onClick={handleReject}
-          // disabled={isSubmitting}
-          // type="submit"
           className="w-full py-2 px-4 bg-[#b72b2b] text-white font-semibold rounded-lg shadow-md hover:bg-[#a90b0b] focus:outline-none focus:ring-2 focus:ring-red-500"
         >
           Reject
@@ -160,4 +152,4 @@ const page = ({ params }: { params: Params }) => {
   );
 };
 
-export default page;
+export default Page;

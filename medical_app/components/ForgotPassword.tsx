@@ -2,38 +2,38 @@
 import "@/asset/css/app.min.css";
 import "@/asset/css/style.css";
 import "@/asset/css/fontawesome.min.css";
-import Link from 'next/link';
-import React from 'react'
-import { toast, Toaster } from 'sonner';
+import Link from "next/link";
+import React from "react";
+import { toast, Toaster } from "sonner";
 import form_bg from "@/asset/img/bg/contact_form_bg.png";
-import authService from '@/services/auth.service';
-
+import authService from "@/services/auth.service";
 
 const ForgotPassword = () => {
-    const [email, setEmail] = React.useState('');
+  const [email, setEmail] = React.useState("");
 
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-  
-      // check all fields are filled
-      if (email === "") {
-        toast.error("Please fill in all fields");
-        return;
-      }
-  
-      try {
-        const res = await authService.forgotPassword(email);
-        console.log(res);
-        if (res.status === 200) {
-          toast.success(res.message);
-        } else {
-          toast.error(res.message);
-        }
-      } catch (error) {
-        console.log("Error", error);
-        toast.error("Something went wrong");
-      }
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // check all fields are filled
+    if (email === "") {
+      toast.error("Please fill in all fields");
+      return;
     }
+
+    try {
+      const res = await authService.forgotPassword(email);
+      console.log(res);
+      if (res.status === 200) {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      console.log("Error", error);
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
     <div>
       <div className="space-bottom">
@@ -52,21 +52,19 @@ const ForgotPassword = () => {
                     className="form-control"
                     name="email"
                     id="email"
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email Address"
                   />
                   <i className="fal fa-envelope"></i>
                 </div>
 
-               
                 <div className="lg:ml-[30px] text-[12px] md:text-[15px]">
                   <p>
-                    If you don't have an account?{" "}
+                    If you don&apos;t have an account?{" "}
                     <Link href="/signup">Sign Up</Link>
                   </p>
                   <p>
-                    already have an account?{" "}
-                    <Link href="/login">Login</Link>
+                    Already have an account? <Link href="/login">Login</Link>
                   </p>
                 </div>
                 <div className="form-btn col-12">
@@ -82,6 +80,6 @@ const ForgotPassword = () => {
       <Toaster position="top-left" richColors />
     </div>
   );
-}
+};
 
-export default ForgotPassword
+export default ForgotPassword;

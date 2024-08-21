@@ -21,15 +21,20 @@ interface FormValues {
 const Login: React.FC = () => {
   const schema: ZodType<FormValues> = z.object({
     email: z.string().email({ message: "Invalid email" }),
-    password: z.string().min(8, { message: "Password must be at least 8 characters" }),
-  })
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+  });
 
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<FormValues>({resolver: zodResolver(schema)})
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<FormValues>({ resolver: zodResolver(schema) });
   const router = useRouter();
 
-
   const handleLogin = async (formData: FormValues) => {
-
     try {
       const res = await authService.login(formData);
       console.log(res);
@@ -41,7 +46,6 @@ const Login: React.FC = () => {
       } else {
         toast.error(res.message);
       }
-     
     } catch (error: any) {
       console.log("Error", error);
       toast.error(error.message);
@@ -64,16 +68,12 @@ const Login: React.FC = () => {
                   <input
                     type="email"
                     className="form-control"
-                    // name="email"
                     id="email"
-                    // onChange={handleChange}
                     placeholder="Email Address"
                     {...register("email")}
                   />
                   {errors.email && (
-                    <p className="text-red-400 mx-3">
-                      {errors.email.message}
-                    </p>
+                    <p className="text-red-400 mx-3">{errors.email.message}</p>
                   )}
                   <i className="fal fa-envelope"></i>
                 </div>
@@ -82,9 +82,7 @@ const Login: React.FC = () => {
                   <input
                     type="password"
                     className="form-control"
-                    // name="password"
                     id="password"
-                    // onChange={handleChange}
                     placeholder="Your Password"
                     {...register("password")}
                   />
@@ -97,7 +95,7 @@ const Login: React.FC = () => {
                 </div>
                 <div className="lg:ml-[30px] text-[12px] md:text-[15px]">
                   <p>
-                    If you don't have an account?{" "}
+                    If you don&apos;t have an account?{" "}
                     <Link href="/signup">Sign Up</Link>
                   </p>
                   <p>
@@ -106,7 +104,13 @@ const Login: React.FC = () => {
                   </p>
                 </div>
                 <div className="form-btn col-12">
-                  <button type="submit" disabled={isSubmitting} className="th-btn btn-fw">{isSubmitting ? "Submitting..." : "Login"}</button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="th-btn btn-fw"
+                  >
+                    {isSubmitting ? "Submitting..." : "Login"}
+                  </button>
                 </div>
               </div>
               <p className="form-messages mb-0 mt-3"></p>

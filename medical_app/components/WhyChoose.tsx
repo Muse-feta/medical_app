@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react";
 import "@/asset/css/app.min.css";
 import "@/asset/css/style.css";
 import "@/asset/css/fontawesome.min.css";
-import Image from 'next/image';
+import Image from "next/image";
 import img1 from "@/asset/img/theme-img/title_icon.svg";
 import img2 from "@/asset/img/normal/why_1.jpg";
 
@@ -26,7 +26,9 @@ const WhyChoose = () => {
                 <div className="choose-feature">
                   <div className="box-number">01</div>
                   <div className="media-body">
-                    <h3 className="box-title">Compassionate & Expert Care</h3>
+                    <h3 className="box-title">
+                      Compassionate &amp; Expert Care
+                    </h3>
                     <p className="box-text">
                       Our team of dedicated healthcare professionals combines
                       years of experience with a genuine commitment to
@@ -51,7 +53,7 @@ const WhyChoose = () => {
                     <h3 className="box-title">Personalized Treatment Plans</h3>
                     <p className="box-text">
                       We understand that every patient is unique, and their
-                      healthcare needs may vary. That's why we create
+                      healthcare needs may vary. That&apos;s why we create
                       individualized treatment.
                     </p>
                   </div>
@@ -68,6 +70,6 @@ const WhyChoose = () => {
       </div>
     </div>
   );
-}
+};
 
-export default WhyChoose
+export default WhyChoose;

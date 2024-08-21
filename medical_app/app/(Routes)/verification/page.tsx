@@ -25,16 +25,16 @@ const VerificationPage: React.FC = () => {
         </div>
         <h1 className="text-2xl font-bold mb-2">Please verify your email</h1>
         <p className="text-gray-600 mb-4">
-          You're almost there! We sent an email to{" "}
+          You&apos;re almost there! We sent an email to{" "}
           <span className="font-medium text-gray-800">medical@email.com</span>
         </p>
         <p className="text-gray-600 mb-4">
           Just click on the link in that email to complete your signup. If you
-          don't see it, you may need to{" "}
+          don&apos;t see it, you may need to{" "}
           <span className="font-medium">check your spam folder.</span>
         </p>
         {/* <p className="text-gray-600 mb-6">
-          Still can't find the email? No problem.
+          Still can&apos;t find the email? No problem.
         </p> */}
         {/* <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
           Resend Verification Email

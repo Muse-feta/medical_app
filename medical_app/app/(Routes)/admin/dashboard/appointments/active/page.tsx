@@ -18,41 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-
-type Props = {};
-
-const DashboardOrders = (props: Props) => {
-  const { userData } = useAuth();
-  const router = useRouter();
-
-  const [data, setData] = React.useState<Payment[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`/api/appointement`);
-        console.log("res", res.data.data);
-        setData(res.data.data);
-      } catch (error) {
-        console.log("Error", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const handleRowClick = (rowData: Payment) => {
-    router.push(`/admin/dashboard/appointments/active/${rowData.id}`);
-  };
-
-  return (
-    <div className="flex flex-col gap-5 w-full">
-      <DataTable columns={columns} data={data} onRowClick={handleRowClick} />
-    </div>
-  );
-};
-
-export default DashboardOrders;
-
+// Define the Payment type
 type Payment = {
   id: number;
   patientName: string;
@@ -61,7 +27,8 @@ type Payment = {
   email: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+// Define the columns for the DataTable
+const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "id",
     header: "Order Id",
@@ -98,3 +65,36 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => row.getValue("email"),
   },
 ];
+
+const DashboardOrders = () => {
+  const { userData } = useAuth();
+  const router = useRouter();
+  const [data, setData] = React.useState<Payment[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`/api/appointement`);
+        console.log("res", res.data.data);
+        setData(res.data.data);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleRowClick = (rowData: Payment) => {
+    router.push(`/admin/dashboard/appointments/active/${rowData.id}`);
+  };
+
+  return (
+    <div className="flex flex-col gap-5 w-full">
+      <DashboardTitle title="Dashboard Orders" />{" "}
+      {/* Assuming you have a title component */}
+      <DataTable columns={columns} data={data} onRowClick={handleRowClick} />
+    </div>
+  );
+};
+
+export default DashboardOrders;

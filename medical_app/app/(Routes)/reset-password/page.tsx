@@ -11,33 +11,18 @@ const ResetPasswordPage = () => {
   const [token, setToken] = useState("");
   const [error, setError] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState<number | null>(null);
   const router = useRouter();
-
-  console.log(userId);
-
-  // const verifyUserEmail = async () => {
-  //   try {
-  //     await axios.post("/api/users/resetPassword", { token, password });
-  //     setIsVerified(true);
-  //   } catch (error: any) {
-  //     console.log(error.message);
-  //     setError(error.message);
-  //   }
-  // };
 
   useEffect(() => {
     const token = window.location.search.split("=")[1];
     setToken(token || "");
-    // console.log(token)
   }, []);
 
   useEffect(() => {
     const verifyToken = async () => {
       try {
         const res = await axios.post("/api/users/verifyForgotToken", { token });
-        console.log("res verifyForgotToken", res);
-        // handle the response if necessary
         if (res.data.status === 200) {
           setUserId(res.data.userId);
           setIsVerified(true);
@@ -46,7 +31,6 @@ const ResetPasswordPage = () => {
           setError(true);
         }
       } catch (error) {
-        // handle the error if necessary
         console.error("Error verifying token:", error);
         setError(true);
       }
@@ -62,21 +46,17 @@ const ResetPasswordPage = () => {
         const res = await axios.post("/api/users/resetPassword", {
           password,
           userId,
-          
         });
 
-        console.log("res of resetPassword", res);
-
-        if(res.status === 200) {
+        if (res.status === 200) {
           toast.success(res.data.message);
           setTimeout(() => {
             router.push("/login");
           }, 3000);
-        }else {
+        } else {
           toast.error(res.data.message);
           setError(true);
         }
-        
       }
     } catch (error: any) {
       console.log(error);
@@ -111,7 +91,7 @@ const ResetPasswordPage = () => {
                     </div>
                     <div className="lg:ml-[30px] text-[12px] md:text-[15px]">
                       <p>
-                        If you don't have an account?{" "}
+                        If you don&apos;t have an account?{" "}
                         <Link href="/signup">Sign Up</Link>
                       </p>
                       <p>
