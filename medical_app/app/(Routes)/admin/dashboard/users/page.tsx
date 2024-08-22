@@ -1,13 +1,14 @@
 "use client";
+
 import DashboardTitle from "@/components/ui/dashboardTitle";
 import { DataTable } from "@/components/ui/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-type Props = {};
+// Define the Payment type
 type Payment = {
   id: number;
   firstname: string;
@@ -16,18 +17,51 @@ type Payment = {
   role: string;
 };
 
-const DashboardUsers = (props: Props) => {
-  const [data, setData] = React.useState<Payment[]>([]);
+// Define the columns for the DataTable
+const columns: ColumnDef<Payment, any>[] = [
+  {
+    accessorKey: "firstname",
+    header: "Name",
+    cell: ({ row }) => (
+      <div className="flex items-center gap-2">
+        <Image
+          className="w-8 h-8 rounded-full"
+          src={`https://api.dicebear.com/9.x/lorelei/svg?seed=${row.getValue(
+            "firstname"
+          )}`}
+          alt="avatar"
+          width={32}
+          height={32}
+        />
+        <span>{row.getValue("firstname")}</span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "phone",
+    header: "Phone",
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
+  },
+];
+
+const DashboardUsers: React.FC = () => {
+  const [data, setData] = useState<Payment[]>([]);
   const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`/api/users`);
-        console.log("res", res.data.data);
         setData(res.data.data);
       } catch (error) {
-        console.log("Error", error);
+        console.error("Error fetching users data:", error);
       }
     };
     fetchData();
@@ -46,38 +80,3 @@ const DashboardUsers = (props: Props) => {
 };
 
 export default DashboardUsers;
-
-export const columns: ColumnDef<Payment>[] = [
-  {
-    accessorKey: "firstname",
-    header: "Name",
-    cell: ({ row }) => {
-      return (
-        <div className="flex items-center gap-2">
-          <Image
-            className="w-8 h-8 rounded-full"
-            src={`https://api.dicebear.com/9.x/lorelei/svg?seed=${row.getValue(
-              "firstname"
-            )}`}
-            alt="avatar"
-            width={32} // Width of the image
-            height={32} // Height of the image
-          />
-          <span>{row.getValue("firstname")}</span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
-    accessorKey: "phone",
-    header: "Phone",
-  },
-  {
-    accessorKey: "role",
-    header: "Role",
-  },
-];
